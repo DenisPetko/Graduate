@@ -97,7 +97,7 @@ public class AdsController {
             description = "Forbidden"
     )
 
-    @PostMapping
+    @PostMapping("/{id}/comments")
     public ResponseEntity<?> addComment() {
 //todo:
         return ResponseEntity.ok().build();
@@ -115,7 +115,7 @@ public class AdsController {
             responseCode = "404",
             description = "Not Found"
     )
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getAds() {
 //todo:
         return ResponseEntity.ok().build();
@@ -213,7 +213,7 @@ public class AdsController {
             description = "Forbidden"
     )
     @Tag(name = "Комментарии")
-    @DeleteMapping("/{adId}/comments/{commentId}")
+    @PatchMapping("/{adId}/comments/{commentId}")
     public ResponseEntity<?> updateComment() {
 //todo:
         return ResponseEntity.ok().build();
