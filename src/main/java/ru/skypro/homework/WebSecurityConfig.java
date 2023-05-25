@@ -46,7 +46,8 @@ public class WebSecurityConfig {
                     .mvcMatchers(AUTH_WHITELIST)
                     .permitAll()
                     .mvcMatchers("/ads/**", "/users/**")
-                    .authenticated())
+                    .authenticated()
+        )
         .cors()
         .disable()
         .httpBasic(withDefaults());
