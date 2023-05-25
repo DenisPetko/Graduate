@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.skypro.homework.dto.User;
+import ru.skypro.homework.dto.UserDTO;
 
 @RestController
 @RequestMapping("/users")
@@ -44,7 +44,7 @@ public class UserController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = User.class))
+                    schema = @Schema(implementation = UserDTO.class))
     )
     @ApiResponse(
             responseCode = "401",
@@ -70,7 +70,7 @@ public class UserController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = User.class))
+                    schema = @Schema(implementation = UserDTO.class))
     )
     @ApiResponse(
             responseCode = "204",
