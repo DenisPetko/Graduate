@@ -35,6 +35,7 @@ public class UserController {
     @PostMapping("/set_password")
     public ResponseEntity<?> setPassword() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Получить информацию об авторизованном пользователе")
@@ -60,6 +61,7 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<?> getUser() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Обновить информацию об авторизованном пользователе")
@@ -89,6 +91,7 @@ public class UserController {
     @PatchMapping("/me")
     public ResponseEntity<?> updateUser() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Обновить аватар авторизованного пользователя")
@@ -103,5 +106,6 @@ public class UserController {
     @PatchMapping("/me/image")
     public ResponseEntity<?> updateUserImage() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 }

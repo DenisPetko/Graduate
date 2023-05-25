@@ -33,5 +33,6 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<?> login() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 }
