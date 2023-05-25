@@ -33,5 +33,6 @@ public class RegisterController {
     @PostMapping
     public ResponseEntity<?> register() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 }

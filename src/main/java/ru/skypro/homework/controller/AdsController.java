@@ -28,6 +28,7 @@ public class AdsController {
     @GetMapping
     public ResponseEntity<?> getAllAds() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Добавить объявление")
@@ -53,6 +54,7 @@ public class AdsController {
     @PostMapping
     public ResponseEntity<?> addAd() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Получить комментарии объявления")
@@ -71,6 +73,7 @@ public class AdsController {
     @GetMapping("/{id}/comments")
     public ResponseEntity<?> getComments() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Добавить комментарий к объявлению")
@@ -97,6 +100,7 @@ public class AdsController {
     @PostMapping
     public ResponseEntity<?> addComment() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Получить информацию об объявлении")
@@ -114,6 +118,7 @@ public class AdsController {
     @PostMapping("/{id}")
     public ResponseEntity<?> getAds() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Удалить объявление")
@@ -133,6 +138,7 @@ public class AdsController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeAd() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Обновить информацию об объявлении")
@@ -159,6 +165,7 @@ public class AdsController {
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateAds() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Удалить комментарий")
@@ -182,6 +189,7 @@ public class AdsController {
     @DeleteMapping("/{adId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Обновить комментарий")
@@ -208,6 +216,7 @@ public class AdsController {
     @DeleteMapping("/{adId}/comments/{commentId}")
     public ResponseEntity<?> updateComment() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Получить объявления авторизованного пользователя")
@@ -230,6 +239,7 @@ public class AdsController {
     @GetMapping("/me")
     public ResponseEntity<?> getAdsMe() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Обновить картинку объявления")
@@ -247,5 +257,6 @@ public class AdsController {
     @PatchMapping("/{id}/image")
     public ResponseEntity<?> updateImage() {
 //todo:
+        return ResponseEntity.ok().build();
     }
 }
