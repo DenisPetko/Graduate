@@ -253,7 +253,6 @@ paths:
                 $ref: '#/components/schemas/FullAds'
         '404':
           description: Not Found
-
     delete:
       tags:
         - Объявления
