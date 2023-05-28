@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skypro.homework.dto.LoginReqDTO;
-import ru.skypro.homework.dto.RegisterReqDTO;
+import ru.skypro.homework.dto.LoginReqDto;
+import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.model.Role;
 import ru.skypro.homework.service.AuthService;
 
@@ -31,36 +31,6 @@ public class AuthController {
     private final AuthService authService;
 
     @Operation(
-            summary = "Авторизация пользователя",
-            description = "Авторизация пользователя из тела запроса",
-            tags = "Авторизация"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "OK. Пользователь авторизирован",
-                    content = {
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = LoginReqDTO.class))
-                            )
-                    }
-            ),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {@Content()}),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {@Content()}),
-            @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
-    }
-    )
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginReqDTO req) {
-        if (authService.login(req.getUsername(), req.getPassword())) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-    }
-
-    @Operation(
             summary = "Регистрация пользователя",
             description = "Регистрация пользователя из тела запроса",
             tags = "Регистрация"
@@ -72,7 +42,7 @@ public class AuthController {
                     content = {
                             @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = RegisterReqDTO.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = RegisterReqDto.class))
                             )
                     }
             ),
@@ -82,13 +52,43 @@ public class AuthController {
     }
     )
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterReqDTO req) {
+    public ResponseEntity<?> register(@RequestBody RegisterReqDto req) {
         log.info("New request for register:{},{}}",req.getUsername(), req.getRole());
         Role role = req.getRole() == null ? USER : req.getRole();
         if (authService.register(req, role)) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @Operation(
+            summary = "Авторизация пользователя",
+            description = "Авторизация пользователя из тела запроса",
+            tags = "Авторизация"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK. Пользователь авторизирован",
+                    content = {
+                            @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    array = @ArraySchema(schema = @Schema(implementation = LoginReqDto.class))
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {@Content()}),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = {@Content()}),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content()})
+    }
+    )
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginReqDto req) {
+        if (authService.login(req.getUsername(), req.getPassword())) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 }

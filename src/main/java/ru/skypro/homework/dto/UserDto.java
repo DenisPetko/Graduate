@@ -3,7 +3,7 @@ package ru.skypro.homework.dto;
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class UserDto {
     private long id;
     private String email;
     private String firstName;

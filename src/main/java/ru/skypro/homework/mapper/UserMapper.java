@@ -1,17 +1,17 @@
 package ru.skypro.homework.mapper;
 
-import ru.skypro.homework.dto.RegisterReqDTO;
-import ru.skypro.homework.dto.UserDTO;
+import ru.skypro.homework.dto.RegisterReqDto;
+import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.model.User;
 
 
 public interface UserMapper {
 
-    UserDTO mapToUserDTO(User user);
+    UserDto mapToUserDTO(User user);
 
 
-    User mapToUser(UserDTO userDto);
+    User mapToUser(UserDto userDto);
 
 
-    User mapToUser(RegisterReqDTO registerReqDto);
+    User mapToUser(RegisterReqDto registerReqDto);
 }

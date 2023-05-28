@@ -7,8 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.NewPasswordDTO;
-import ru.skypro.homework.dto.RegisterReqDTO;
+import ru.skypro.homework.dto.NewPasswordDto;
+import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.exception.UserUnauthorizedException;
 import ru.skypro.homework.mapper.UserMapper;
@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public boolean register(RegisterReqDTO registerReqDTO, Role role) {
+  public boolean register(RegisterReqDto registerReqDTO, Role role) {
     if (userRepository.findByEmail(registerReqDTO.getUsername()).isPresent()) {
       return false;
     }
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
 
 
   @Override
-  public void changePassword(NewPasswordDTO newPasswordDto) {
+  public void changePassword(NewPasswordDto newPasswordDto) {
 
     SecurityContext securityContext = SecurityContextHolder.getContext();
     Authentication authentication = securityContext.getAuthentication();

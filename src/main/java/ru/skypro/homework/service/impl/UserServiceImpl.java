@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.UserDTO;
+import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepository;
@@ -37,9 +37,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDTO getUserDto() {
+    public UserDto getUserDto() {
         Optional<User> currentUser = findAuthUser();
-        UserDTO currentUserDto = new UserDTO();
+        UserDto currentUserDto = new UserDto();
         if (currentUser.isPresent()) {
             currentUserDto = userMapper.mapToUserDTO(currentUser.get());
         }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDTO updateUserDto(UserDTO newUserDto) {
+    public UserDto updateUserDto(UserDto newUserDto) {
         Optional<User> currentUser = findAuthUser();
         User newCurrentUser = new User();
         if (currentUser.isPresent()) {

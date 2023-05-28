@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.skypro.homework.dto.UserDTO;
+import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.homework.dto.NewPasswordDto;
+import ru.skypro.homework.dto.UserDto;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/")
 @Tag(name = "Пользователи", description = "API для работы с пользователями")
 public class UserController {
 
@@ -32,9 +34,9 @@ public class UserController {
             responseCode = "404",
             description = "Not Found"
     )
-    @PostMapping("/set_password")
-    public ResponseEntity<?> setPassword() {
-//todo:
+    @PostMapping("/users/set_password")
+    public ResponseEntity<Void> setPassword(@RequestBody NewPasswordDto newPasswordDto) {
+        //todo
         return ResponseEntity.ok().build();
     }
 
@@ -44,7 +46,7 @@ public class UserController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = UserDTO.class))
+                    schema = @Schema(implementation = UserDto.class))
     )
     @ApiResponse(
             responseCode = "401",
@@ -58,8 +60,8 @@ public class UserController {
             responseCode = "404",
             description = "Not Found"
     )
-    @GetMapping("/me")
-    public ResponseEntity<?> getUser() {
+    @GetMapping("/users/me")
+    public ResponseEntity<UserDto> getUser() {
 //todo:
         return ResponseEntity.ok().build();
     }
@@ -70,7 +72,7 @@ public class UserController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = UserDTO.class))
+                    schema = @Schema(implementation = UserDto.class))
     )
     @ApiResponse(
             responseCode = "204",
@@ -88,11 +90,13 @@ public class UserController {
             responseCode = "404",
             description = "Not Found"
     )
-    @PatchMapping("/me")
-    public ResponseEntity<?> updateUser() {
-//todo:
-        return ResponseEntity.ok().build();
+    @PatchMapping("/users/me")
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+        //todo
+        UserDto newUserDto = new UserDto(); // исправить!!!
+        return ResponseEntity.ok().body(newUserDto);
     }
+
 
     @Operation(summary = "Обновить аватар авторизованного пользователя")
     @ApiResponse(
@@ -103,9 +107,9 @@ public class UserController {
             responseCode = "404",
             description = "Not Found"
     )
-    @PatchMapping("/me/image")
-    public ResponseEntity<?> updateUserImage() {
-//todo:
+    @PatchMapping("/users/me/image")
+    public ResponseEntity<byte[]> updateUserImage(@RequestPart MultipartFile inputImage) {
+        //todo
         return ResponseEntity.ok().build();
     }
 }

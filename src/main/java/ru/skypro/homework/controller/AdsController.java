@@ -9,10 +9,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 
 @RestController
-@RequestMapping("/ads")
+@RequestMapping("/")
 @Tag(name = "Объявления", description = "API по работе с объявлениями")
 public class AdsController {
 
@@ -22,11 +23,11 @@ public class AdsController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    array = @ArraySchema(schema = @Schema(implementation = ResponseWrapperAds[].class))
+                    array = @ArraySchema(schema = @Schema(implementation = ResponseWrapperAdsDto[].class))
             )
     )
-    @GetMapping
-    public ResponseEntity<?> getAllAds() {
+    @GetMapping("/ads")
+    public ResponseEntity<ResponseWrapperAdsDto> getAllAds() {
 //todo:
         return ResponseEntity.ok().build();
     }
@@ -37,7 +38,7 @@ public class AdsController {
             description = "Created",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = Ads.class))
+                    schema = @Schema(implementation = AdsDto.class))
     )
     @ApiResponse(
             responseCode = "404",
@@ -51,8 +52,8 @@ public class AdsController {
             responseCode = "403",
             description = "Forbidden"
     )
-    @PostMapping
-    public ResponseEntity<?> addAd() {
+    @PostMapping("/ads")
+    public ResponseEntity<AdsDto> addAd(@RequestPart CreateAdsDto properties, @RequestPart MultipartFile image) {
 //todo:
         return ResponseEntity.ok().build();
     }
@@ -63,17 +64,17 @@ public class AdsController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    array = @ArraySchema(schema = @Schema(implementation = ResponseWrapperComment[].class)))
+                    array = @ArraySchema(schema = @Schema(implementation = ResponseWrapperCommentDto[].class)))
     )
     @ApiResponse(
             responseCode = "404",
             description = "Not Found"
     )
     @Tag(name = "Комментарии")
-    @GetMapping("/{id}/comments")
-    public ResponseEntity<?> getComments() {
-//todo:
-        return ResponseEntity.ok().build();
+    @GetMapping("/ads/{id}/comments")
+    public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable Integer id) {
+        ResponseWrapperCommentDto comments = new ResponseWrapperCommentDto(); //todo: написать реализацию
+        return ResponseEntity.ok().body(comments);
     }
 
     @Operation(summary = "Добавить комментарий к объявлению")
@@ -82,7 +83,7 @@ public class AdsController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = Comment.class))
+                    schema = @Schema(implementation = CommentDto.class))
     )
     @ApiResponse(
             responseCode = "404",
@@ -97,10 +98,10 @@ public class AdsController {
             description = "Forbidden"
     )
 
-    @PostMapping("/{id}/comments")
-    public ResponseEntity<?> addComment() {
-//todo:
-        return ResponseEntity.ok().build();
+    @PostMapping("/ads/{id}/comments")
+    public ResponseEntity<CommentDto> addComment(@PathVariable Integer id, @RequestBody CommentDto commentDto) {
+        CommentDto newCommentDto = new CommentDto(); //todo написать реализацию
+        return ResponseEntity.ok().body(newCommentDto);
     }
 
     @Operation(summary = "Получить информацию об объявлении")
@@ -109,16 +110,16 @@ public class AdsController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = FullAds.class))
+                    schema = @Schema(implementation = FullAdsDto.class))
     )
     @ApiResponse(
             responseCode = "404",
             description = "Not Found"
     )
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getAds() {
-//todo:
-        return ResponseEntity.ok().build();
+    @GetMapping("/ads/{id}")
+    public ResponseEntity<FullAdsDto> getAds(@PathVariable Integer id) {
+        FullAdsDto fullAdsDto = new FullAdsDto(); //todo: написать реализацию
+        return ResponseEntity.ok(fullAdsDto);
     }
 
     @Operation(summary = "Удалить объявление")
@@ -135,9 +136,9 @@ public class AdsController {
             description = "Forbidden"
     )
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeAd() {
-//todo:
+    @DeleteMapping("/ads/{id}")
+    public ResponseEntity<?> removeAd(@PathVariable int id) {
+        //todo: написать реализацию
         return ResponseEntity.ok().build();
     }
 
@@ -147,7 +148,7 @@ public class AdsController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = Ads.class))
+                    schema = @Schema(implementation = AdsDto.class))
     )
     @ApiResponse(
             responseCode = "404",
@@ -162,9 +163,9 @@ public class AdsController {
             description = "Forbidden"
     )
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> updateAds() {
-//todo:
+    @PatchMapping("/ads/{id}")
+    public ResponseEntity<AdsDto> updateAds(@PathVariable Integer id, @RequestBody CreateAdsDto createAdsDto) {
+        //todo: написать реализацию
         return ResponseEntity.ok().build();
     }
 
@@ -186,9 +187,9 @@ public class AdsController {
             description = "Forbidden"
     )
     @Tag(name = "Комментарии")
-    @DeleteMapping("/{adId}/comments/{commentId}")
-    public ResponseEntity<?> deleteComment() {
-//todo:
+    @DeleteMapping("/ads/{adId}/comments/{commentId}")
+    public ResponseEntity<?> deleteComment( @PathVariable Integer adId, @PathVariable Integer commentId) {
+        //todo: написать реализацию
         return ResponseEntity.ok().build();
     }
 
@@ -198,7 +199,7 @@ public class AdsController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = Comment.class))
+                    schema = @Schema(implementation = CommentDto.class))
     )
     @ApiResponse(
             responseCode = "404",
@@ -213,9 +214,9 @@ public class AdsController {
             description = "Forbidden"
     )
     @Tag(name = "Комментарии")
-    @PatchMapping("/{adId}/comments/{commentId}")
-    public ResponseEntity<?> updateComment() {
-//todo:
+    @PatchMapping("/ads/{adId}/comments/{commentId}")
+    public ResponseEntity<CommentDto> updateComment(@PathVariable Integer adId, @PathVariable Integer commentId) {
+        //todo: написать реализацию
         return ResponseEntity.ok().build();
     }
 
@@ -225,7 +226,7 @@ public class AdsController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = ResponseWrapperAds[].class))
+                    schema = @Schema(implementation = ResponseWrapperAdsDto[].class))
     )
     @ApiResponse(
             responseCode = "401",
@@ -236,9 +237,9 @@ public class AdsController {
             description = "Forbidden"
     )
     @Tag(name = "Комментарии")
-    @GetMapping("/me")
-    public ResponseEntity<?> getAdsMe() {
-//todo:
+    @GetMapping("/ads/me")
+    public ResponseEntity<ResponseWrapperAdsDto> getAdsMe() {
+        //todo: написать реализацию
         return ResponseEntity.ok().build();
     }
 
@@ -248,15 +249,15 @@ public class AdsController {
             description = "OK",
             content = @Content(
                     mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE
-    ))
+            ))
     @ApiResponse(
             responseCode = "404",
             description = "Not Found"
     )
     @Tag(name = "Комментарии")
-    @PatchMapping("/{id}/image")
-    public ResponseEntity<?> updateImage() {
-//todo:
+    @PatchMapping("/ads/{id}/image")
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) {
+        //todo: написать реализацию
         return ResponseEntity.ok().build();
     }
 }
