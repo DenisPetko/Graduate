@@ -99,7 +99,7 @@ public class AdsController {
     )
 
     @PostMapping("/ads/{id}/comments")
-    public ResponseEntity<CommentDto> addComment(@PathVariable Integer id, @RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> addComment(@PathVariable Integer id, @RequestBody CommentDto commentDto) { //todo почему CommentDto а не просто Comment ?
         CommentDto newCommentDto = new CommentDto(); //todo написать реализацию
         return ResponseEntity.ok().body(newCommentDto);
     }
@@ -117,7 +117,7 @@ public class AdsController {
             description = "Not Found"
     )
     @GetMapping("/ads/{id}")
-    public ResponseEntity<FullAdsDto> getAds(@PathVariable Integer id) {
+    public ResponseEntity<FullAdsDto> getAd(@PathVariable Integer id) {
         FullAdsDto fullAdsDto = new FullAdsDto(); //todo: написать реализацию
         return ResponseEntity.ok(fullAdsDto);
     }
