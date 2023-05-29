@@ -52,7 +52,7 @@ public class AdsController {
             responseCode = "403",
             description = "Forbidden"
     )
-    @PostMapping("/ads")
+    @PostMapping(value = "/ads", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> addAd(@RequestPart CreateAdsDto properties, @RequestPart MultipartFile image) {
 //todo:
         return ResponseEntity.ok().build();
@@ -255,8 +255,8 @@ public class AdsController {
             description = "Not Found"
     )
     @Tag(name = "Комментарии")
-    @PatchMapping("/ads/{id}/image")
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) {
+    @PatchMapping(value = "/ads/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<byte[]> updateImage(@PathVariable("id") String id, @RequestPart MultipartFile image) {
         //todo: написать реализацию
         return ResponseEntity.ok().build();
     }

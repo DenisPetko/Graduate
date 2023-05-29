@@ -107,8 +107,8 @@ public class UserController {
             responseCode = "404",
             description = "Not Found"
     )
-    @PatchMapping("/users/me/image")
-    public ResponseEntity<byte[]> updateUserImage(@RequestPart MultipartFile inputImage) {
+    @PatchMapping(value = "/users/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<byte[]> updateUserImage(@RequestPart MultipartFile image) {
         //todo
         return ResponseEntity.ok().build();
     }
