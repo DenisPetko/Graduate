@@ -254,7 +254,6 @@ public class AdsController {
             responseCode = "404",
             description = "Not Found"
     )
-    @Tag(name = "Комментарии")
     @PatchMapping(value = "/ads/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> updateImage(@PathVariable("id") String id, @RequestPart MultipartFile image) {
         //todo: написать реализацию
