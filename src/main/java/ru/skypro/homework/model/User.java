@@ -8,7 +8,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * Класс, описывающий пользователя
+ **/
 @Entity
 @Getter
 @Setter

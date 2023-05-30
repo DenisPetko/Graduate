@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.User;
@@ -58,5 +59,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             userRepository.save(newCurrentUser);
         }
         return userMapper.mapToUserDTO(newCurrentUser);
+    }
+
+    @Override
+    public void updateUserImage(MultipartFile image) {
+
     }
 }

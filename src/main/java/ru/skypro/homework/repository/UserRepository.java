@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 import ru.skypro.homework.model.User;
 
 import java.util.Optional;
-
+/**
+ * Интерфейс для работы с базой данных пользователей
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);

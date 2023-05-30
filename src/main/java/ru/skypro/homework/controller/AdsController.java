@@ -99,7 +99,7 @@ public class AdsController {
     )
 
     @PostMapping("/ads/{id}/comments")
-    public ResponseEntity<CommentDto> addComment(@PathVariable Integer id, @RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> addComment(@PathVariable Integer id, @RequestBody CommentDto commentDto) { //todo почему CommentDto а не просто Comment ?
         CommentDto newCommentDto = new CommentDto(); //todo написать реализацию
         return ResponseEntity.ok().body(newCommentDto);
     }
@@ -117,7 +117,7 @@ public class AdsController {
             description = "Not Found"
     )
     @GetMapping("/ads/{id}")
-    public ResponseEntity<FullAdsDto> getAds(@PathVariable Integer id) {
+    public ResponseEntity<FullAdsDto> getAd(@PathVariable Integer id) {
         FullAdsDto fullAdsDto = new FullAdsDto(); //todo: написать реализацию
         return ResponseEntity.ok(fullAdsDto);
     }
@@ -254,7 +254,6 @@ public class AdsController {
             responseCode = "404",
             description = "Not Found"
     )
-    @Tag(name = "Комментарии")
     @PatchMapping(value = "/ads/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> updateImage(@PathVariable("id") String id, @RequestPart MultipartFile image) {
         //todo: написать реализацию
