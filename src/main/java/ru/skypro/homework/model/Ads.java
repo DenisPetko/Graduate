@@ -19,15 +19,21 @@ import java.util.List;
 @Table(name = "ads")
 public class Ads {
     @Id
-    @Column(name = "author")
-    private int author;
-    @Column(name = "image")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+    @Column
     private String image;
-    @Column(name = "pk")
-    private int pk; //id объявления
-    @Column(name = "price")
+    @Column
     private int price;
-    @Column(name = "title")
+    @Column
     private String title;
+    @Column
+    private String description;
+    @OneToMany(mappedBy = "ads", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
 }
