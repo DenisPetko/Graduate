@@ -16,16 +16,16 @@ import javax.persistence.*;
 @Table(name = "comments")
 public class Comment {
     @Id
-    @Column(name = "author")
+    @Column
     private int author;
-    @Column(name = "authorImage")
+    @Column
     private String authorImage;
-    @Column(name = "authorFirstName")
+    @Column
     private String authorFirstName;
-    @Column(name = "createdAt")
+    @Column
     private int createdAt;
-    @Column(name = "pk")
+    @Column
     private int pk; //id комментария
-    @Column(name = "text")
+    @Column
     private String text;
 }

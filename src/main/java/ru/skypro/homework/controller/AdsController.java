@@ -70,7 +70,6 @@ public class AdsController {
             responseCode = "404",
             description = "Not Found"
     )
-    @Tag(name = "Комментарии")
     @GetMapping("/ads/{id}/comments")
     public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable Integer id) {
         ResponseWrapperCommentDto comments = new ResponseWrapperCommentDto(); //todo: написать реализацию
@@ -186,7 +185,6 @@ public class AdsController {
             responseCode = "403",
             description = "Forbidden"
     )
-    @Tag(name = "Комментарии")
     @DeleteMapping("/ads/{adId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment( @PathVariable Integer adId, @PathVariable Integer commentId) {
         //todo: написать реализацию
@@ -213,7 +211,6 @@ public class AdsController {
             responseCode = "403",
             description = "Forbidden"
     )
-    @Tag(name = "Комментарии")
     @PatchMapping("/ads/{adId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable Integer adId, @PathVariable Integer commentId) {
         //todo: написать реализацию
@@ -236,7 +233,6 @@ public class AdsController {
             responseCode = "403",
             description = "Forbidden"
     )
-    @Tag(name = "Комментарии")
     @GetMapping("/ads/me")
     public ResponseEntity<ResponseWrapperAdsDto> getAdsMe() {
         //todo: написать реализацию
@@ -255,7 +251,7 @@ public class AdsController {
             description = "Not Found"
     )
     @PatchMapping(value = "/ads/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage(@PathVariable("id") String id, @RequestPart MultipartFile image) {
+    public ResponseEntity<byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image) {
         //todo: написать реализацию
         return ResponseEntity.ok().build();
     }

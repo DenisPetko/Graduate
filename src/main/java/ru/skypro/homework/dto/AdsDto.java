@@ -1,10 +1,11 @@
 package ru.skypro.homework.dto;
 
 import lombok.Data;
+import ru.skypro.homework.model.User;
 
 @Data
 public class AdsDto {
-    private int author;
+    private User author;
     private String image;
     private int pk; //description: 'id объявления' ? openapi
     private int price;

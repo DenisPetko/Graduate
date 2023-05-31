@@ -11,18 +11,17 @@ import ru.skypro.homework.dto.ResponseWrapperAdsDto;
  */
 public interface AdsService {
 
-    /**
-     * Метод ищет и возвращает список всех объявлений
-     */
     ResponseWrapperAdsDto getAllAdsDto();
 
-    /**
-     * Метод создает объявление
-     */
     AdsDto addAd(CreateAdsDto adDto, MultipartFile image);
 
-    /**
-     * Метод ищет и возвращает объявление по id
-     */
-    FullAdsDto getAd(Integer id);
+    FullAdsDto getFullAd(long id);
+
+    boolean removeAdDto(Integer id);
+
+    AdsDto updateAdDto(Integer id, CreateAdsDto adDto);
+
+    ResponseWrapperAdsDto getAdsMe();
+
+    void updateImageAdDto(Integer id, MultipartFile image);
 }
