@@ -17,11 +17,13 @@ public interface AdsService {
 
     FullAdsDto getFullAd(long id);
 
-    boolean removeAdDto(Integer id);
+    boolean removeAdDto(long id);
 
-    AdsDto updateAdDto(Integer id, CreateAdsDto adDto);
+    AdsDto updateAdDto(long id, CreateAdsDto adDto);
 
-    ResponseWrapperAdsDto getAdsMe();
+    ResponseWrapperAdsDto getAllAdsMe();
 
-    void updateImageAdDto(Integer id, MultipartFile image);
+    void updateImageAdDto(long id, MultipartFile image);
+
+    boolean checkAccess(long id);
 }
