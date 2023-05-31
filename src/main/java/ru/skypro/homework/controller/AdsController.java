@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/")
 @Tag(name = "Объявления", description = "API по работе с объявлениями")
@@ -71,7 +73,7 @@ public class AdsController {
             description = "Not Found"
     )
     @GetMapping("/ads/{id}/comments")
-    public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable Integer id) {
+    public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable long id) {
         ResponseWrapperCommentDto comments = new ResponseWrapperCommentDto(); //todo: написать реализацию
         return ResponseEntity.ok().body(comments);
     }
@@ -211,8 +213,8 @@ public class AdsController {
             responseCode = "403",
             description = "Forbidden"
     )
-    @PatchMapping("/ads/{adId}/comments/{commentId}")
-    public ResponseEntity<CommentDto> updateComment(@PathVariable Integer adId, @PathVariable Integer commentId) {
+    @PatchMapping("/ads/{adsId}/comments/{commentId}")
+    public ResponseEntity<CommentDto> updateComment(@PathVariable Integer adsId, @PathVariable Integer commentId) {
         //todo: написать реализацию
         return ResponseEntity.ok().build();
     }

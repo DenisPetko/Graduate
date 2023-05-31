@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Класс, описывающий комментарий
@@ -16,16 +17,24 @@ import javax.persistence.*;
 @Table(name = "comments")
 public class Comment {
     @Id
-    @Column
-    private int author;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (nullable = false)
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+    @ManyToOne
+    @JoinColumn(name = "ads_id", nullable = false)
+    private Ads ads;
     @Column
     private String authorImage;
     @Column
     private String authorFirstName;
     @Column
-    private int createdAt;
+    private LocalDateTime createdAt;
     @Column
     private int pk; //id комментария
     @Column
     private String text;
+
 }
