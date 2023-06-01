@@ -1,13 +1,15 @@
 package ru.skypro.homework.mapper.Impl;
 
+import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.model.Ads;
 
+import java.util.ArrayList;
 import java.util.Collection;
-
+@Component
 public class AdsMapperImpl implements AdsMapper {
     @Override
     public AdsDto mapAdsToAdsDto(Ads ads) {
@@ -30,7 +32,6 @@ public class AdsMapperImpl implements AdsMapper {
         ads.setTitle(adsDto.getTitle());
         return ads;
     }
-
 
     @Override
     public FullAdsDto mapAdsToFullAdsDto(Ads ads) {
@@ -56,7 +57,11 @@ public class AdsMapperImpl implements AdsMapper {
     }
 
     @Override
-    public Collection<AdsDto> mapAdsListToAdsDtoList(Collection<Ads> adCollection) {
-        return null;
+    public Collection<AdsDto> mapAdsListToAdsDtoList(Collection<Ads> adsCollection) {
+        Collection<AdsDto> adsDtoCollection = new ArrayList<>();
+        for (Ads ads : adsCollection) {
+            adsDtoCollection.add(mapAdsToAdsDto(ads));
+        }
+        return adsDtoCollection;
     }
 }

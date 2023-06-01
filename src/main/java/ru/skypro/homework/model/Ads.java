@@ -21,7 +21,7 @@ public class Ads {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private int id;
+    private long id;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;

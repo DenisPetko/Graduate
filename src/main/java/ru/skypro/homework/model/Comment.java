@@ -19,7 +19,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (nullable = false)
-    private int id;
+    private long id;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
@@ -32,8 +32,6 @@ public class Comment {
     private String authorFirstName;
     @Column
     private LocalDateTime createdAt;
-    @Column
-    private int pk; //id комментария
     @Column
     private String text;
 
