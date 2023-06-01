@@ -8,6 +8,7 @@ import java.util.Collection;
 public class ResponseWrapperCommentDto {
     private int count;
     private Collection<CommentDto> results;
+
     public ResponseWrapperCommentDto(Collection<CommentDto> results) {
         this.count = results.size();
         this.results = results;

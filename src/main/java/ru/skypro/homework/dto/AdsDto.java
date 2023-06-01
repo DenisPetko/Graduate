@@ -7,7 +7,7 @@ import ru.skypro.homework.model.User;
 public class AdsDto {
     private User author;
     private String image;
-    private int pk; //description: 'id объявления' ? openapi
+    private long pk; //description: 'id объявления' ? openapi
     private int price;
     private String title;
 }

@@ -25,5 +25,4 @@ public interface AdsService {
 
     void updateImageAdDto(long id, MultipartFile image);
 
-    boolean checkAccess(long id);
 }

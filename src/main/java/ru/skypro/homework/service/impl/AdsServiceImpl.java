@@ -52,17 +52,18 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     public boolean removeAdDto(long id) {
-        if (checkAccess(id)) {
+        Optional<User> user = userService.findAuthUser();
+        if (user.isPresent()) {
             adsRepository.deleteById(id);
-            return true;
         }
-        throw new UserNotFoundException();
+        return true;
     }
 
     @Override
     public AdsDto updateAdDto(long id, CreateAdsDto createAdsDto) {
         Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-        if (checkAccess(id)) {
+        Optional<User> user = userService.findAuthUser();
+        if (user.isPresent()) {
             ads.setDescription(createAdsDto.getDescription());
             ads.setPrice(createAdsDto.getPrice());
             ads.setTitle(createAdsDto.getTitle());
@@ -83,19 +84,5 @@ public class AdsServiceImpl implements AdsService {
     public void updateImageAdDto(long id, MultipartFile image) {
         Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
         ads.setImage("pictures/NewCottage.jpeg");
-    }
-
-    @Override
-    public boolean checkAccess(long id) {
-        Role role = Role.ADMIN;
-        Ads ad = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-        Optional<User> user = userService.findAuthUser();
-        if (user.isPresent()) {
-            User notOptionalUser = user.get();
-            String currentPrincipalName = notOptionalUser.getUsername();
-            return ad.getAuthor().getUsername().equals(currentPrincipalName)
-                    || notOptionalUser.getAuthorities().contains(role);
-        }
-        return false;
     }
 }

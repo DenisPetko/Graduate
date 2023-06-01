@@ -6,18 +6,23 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.service.impl.AdsServiceImpl;
+import ru.skypro.homework.service.impl.CommentServiceImpl;
 
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/")
 @Tag(name = "Объявления", description = "API по работе с объявлениями")
+@RequiredArgsConstructor
 public class AdsController {
+    private final AdsServiceImpl adsService;
+    private final CommentServiceImpl commentService;
 
     @Operation(summary = "Получить все объявления")
     @ApiResponse(
@@ -30,8 +35,7 @@ public class AdsController {
     )
     @GetMapping("/ads")
     public ResponseEntity<ResponseWrapperAdsDto> getAllAds() {
-//todo:
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(adsService.getAllAdsDto());
     }
 
     @Operation(summary = "Добавить объявление")
@@ -72,9 +76,9 @@ public class AdsController {
             responseCode = "404",
             description = "Not Found"
     )
-    @GetMapping("/ads/{id}/comments")
-    public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable long id) {
-        ResponseWrapperCommentDto comments = new ResponseWrapperCommentDto(); //todo: написать реализацию
+    @GetMapping("/ads/{adsId}/comments")
+    public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable long adsId) {
+        ResponseWrapperCommentDto comments = commentService.getComments(adsId); //todo: написать реализацию
         return ResponseEntity.ok().body(comments);
     }
 
@@ -188,7 +192,7 @@ public class AdsController {
             description = "Forbidden"
     )
     @DeleteMapping("/ads/{adId}/comments/{commentId}")
-    public ResponseEntity<?> deleteComment( @PathVariable Integer adId, @PathVariable Integer commentId) {
+    public ResponseEntity<?> deleteComment(@PathVariable Integer adId, @PathVariable Integer commentId) {
         //todo: написать реализацию
         return ResponseEntity.ok().build();
     }
