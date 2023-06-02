@@ -20,18 +20,14 @@ import java.util.List;
 public class Ads {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private long id;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
-    @Column
-    private String image;
-    @Column
+    @Column(name = "image_id")
+    private long image;
     private int price;
-    @Column
     private String title;
-    @Column
     private String description;
     @OneToMany(mappedBy = "ads", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();

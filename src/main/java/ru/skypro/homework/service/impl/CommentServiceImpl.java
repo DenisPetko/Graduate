@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.ResponseWrapperCommentDto;
 import ru.skypro.homework.exception.AdsNotFoundException;
+import ru.skypro.homework.exception.CommentNotFoundException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.model.Ads;
@@ -50,7 +51,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setAds(ads);
         comment.setCreatedAt(LocalDateTime.now());
         comment.setText(commentDto.getText());
-        return null;
+        return commentDto;
     }
 
     @Override
@@ -64,6 +65,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto updateComment(long adsId, long commentId) {
-        return null;
+        adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
+        return commentMapper.mapToCommentDto(comment);
     }
 }

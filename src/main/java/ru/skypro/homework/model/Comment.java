@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (nullable = false)
     private long id;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
@@ -26,11 +25,11 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "ads_id", nullable = false)
     private Ads ads;
-    @Column
-    private String authorImage;
-    @Column
+    @Column(name = "author_image_id")
+    private long authorImage;
+    @Column(name = "author_first_name")
     private String authorFirstName;
-    @Column
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column
     private String text;

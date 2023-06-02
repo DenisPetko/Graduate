@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.repository.AdsRepository;
 import ru.skypro.homework.service.impl.AdsServiceImpl;
 import ru.skypro.homework.service.impl.CommentServiceImpl;
 
@@ -23,6 +24,7 @@ import ru.skypro.homework.service.impl.CommentServiceImpl;
 public class AdsController {
     private final AdsServiceImpl adsService;
     private final CommentServiceImpl commentService;
+    private final AdsRepository adsRepository;
 
     @Operation(summary = "Получить все объявления")
     @ApiResponse(
@@ -59,9 +61,9 @@ public class AdsController {
             description = "Forbidden"
     )
     @PostMapping(value = "/ads", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AdsDto> addAd(@RequestPart CreateAdsDto properties, @RequestPart MultipartFile image) {
-//todo:
-        return ResponseEntity.ok().build();
+    public ResponseEntity<AdsDto> addAds(@RequestPart CreateAdsDto createAdsDto, @RequestPart MultipartFile image) {
+        adsService.addAd(createAdsDto, image);
+        return ResponseEntity.ok(adsService.addAd(createAdsDto, image));
     }
 
     @Operation(summary = "Получить комментарии объявления")
@@ -103,10 +105,9 @@ public class AdsController {
             description = "Forbidden"
     )
 
-    @PostMapping("/ads/{id}/comments")
-    public ResponseEntity<CommentDto> addComment(@PathVariable Integer id, @RequestBody CommentDto commentDto) { //todo почему CommentDto а не просто Comment ?
-        CommentDto newCommentDto = new CommentDto(); //todo написать реализацию
-        return ResponseEntity.ok().body(newCommentDto);
+    @PostMapping("/ads/{adsId}/comments")
+    public ResponseEntity<CommentDto> addComment(@PathVariable long adsId, @RequestBody CommentDto commentDto) {
+        return ResponseEntity.ok(commentService.addComment(adsId, commentDto));
     }
 
     @Operation(summary = "Получить информацию об объявлении")
@@ -121,10 +122,9 @@ public class AdsController {
             responseCode = "404",
             description = "Not Found"
     )
-    @GetMapping("/ads/{id}")
-    public ResponseEntity<FullAdsDto> getAd(@PathVariable Integer id) {
-        FullAdsDto fullAdsDto = new FullAdsDto(); //todo: написать реализацию
-        return ResponseEntity.ok(fullAdsDto);
+    @GetMapping("/ads/{adsId}")
+    public ResponseEntity<FullAdsDto> getAds(@PathVariable long adsId) {
+        return ResponseEntity.ok(adsService.getFullAd(adsId));
     }
 
     @Operation(summary = "Удалить объявление")
@@ -141,10 +141,9 @@ public class AdsController {
             description = "Forbidden"
     )
 
-    @DeleteMapping("/ads/{id}")
-    public ResponseEntity<?> removeAd(@PathVariable int id) {
-        //todo: написать реализацию
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/ads/{adsId}")
+    public ResponseEntity<?> removeAds(@PathVariable long adsId) {
+        return ResponseEntity.ok(adsService.removeAdDto(adsId));
     }
 
     @Operation(summary = "Обновить информацию об объявлении")
@@ -168,10 +167,9 @@ public class AdsController {
             description = "Forbidden"
     )
 
-    @PatchMapping("/ads/{id}")
-    public ResponseEntity<AdsDto> updateAds(@PathVariable Integer id, @RequestBody CreateAdsDto createAdsDto) {
-        //todo: написать реализацию
-        return ResponseEntity.ok().build();
+    @PatchMapping("/ads/{adsId}")
+    public ResponseEntity<AdsDto> updateAds(@PathVariable long adsId, @RequestBody CreateAdsDto createAdsDto) {
+        return ResponseEntity.ok(adsService.updateAdDto(adsId, createAdsDto));
     }
 
     @Operation(summary = "Удалить комментарий")
@@ -191,10 +189,9 @@ public class AdsController {
             responseCode = "403",
             description = "Forbidden"
     )
-    @DeleteMapping("/ads/{adId}/comments/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable Integer adId, @PathVariable Integer commentId) {
-        //todo: написать реализацию
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/ads/{adsId}/comments/{commentId}")
+    public ResponseEntity<?> deleteComment(@PathVariable long adsId, @PathVariable long commentId) {
+        return ResponseEntity.ok(commentService.deleteComment(adsId, commentId));
     }
 
     @Operation(summary = "Обновить комментарий")
@@ -218,9 +215,8 @@ public class AdsController {
             description = "Forbidden"
     )
     @PatchMapping("/ads/{adsId}/comments/{commentId}")
-    public ResponseEntity<CommentDto> updateComment(@PathVariable Integer adsId, @PathVariable Integer commentId) {
-        //todo: написать реализацию
-        return ResponseEntity.ok().build();
+    public ResponseEntity<CommentDto> updateComment(@PathVariable long adsId, @PathVariable long commentId) {
+        return ResponseEntity.ok(commentService.updateComment(adsId, commentId));
     }
 
     @Operation(summary = "Получить объявления авторизованного пользователя")
@@ -241,8 +237,7 @@ public class AdsController {
     )
     @GetMapping("/ads/me")
     public ResponseEntity<ResponseWrapperAdsDto> getAdsMe() {
-        //todo: написать реализацию
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(adsService.getAllAdsMe());
     }
 
     @Operation(summary = "Обновить картинку объявления")
@@ -256,9 +251,9 @@ public class AdsController {
             responseCode = "404",
             description = "Not Found"
     )
-    @PatchMapping(value = "/ads/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image) {
-        //todo: написать реализацию
+    @PatchMapping(value = "/ads/{adsId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<byte[]> updateImage(@PathVariable long adsId, @RequestPart MultipartFile image) {
+        adsService.updateImageAdsDto(adsId, image);
         return ResponseEntity.ok().build();
     }
 }

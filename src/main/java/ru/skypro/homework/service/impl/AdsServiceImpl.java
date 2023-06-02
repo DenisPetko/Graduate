@@ -11,12 +11,16 @@ import ru.skypro.homework.exception.AdsNotFoundException;
 import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.model.Ads;
+import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.Role;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdsRepository;
+import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.UserService;
 
+import javax.imageio.ImageReader;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,6 +32,7 @@ public class AdsServiceImpl implements AdsService {
     private final AdsMapper adsMapper;
     private final AdsRepository adsRepository;
     private final UserService userService;
+    private final ImageRepository imageRepository;
 
     @Override
     public ResponseWrapperAdsDto getAllAdsDto() {
@@ -36,10 +41,18 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public AdsDto addAd(CreateAdsDto adDto, MultipartFile image) {
-        Ads newAds = adsMapper.mapCreatedAdsDtoToAds(adDto);
+    public AdsDto addAd(CreateAdsDto createAdsDto, MultipartFile image) {
+        Ads newAds = adsMapper.mapCreatedAdsDtoToAds(createAdsDto);
         newAds.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
-        newAds.setImage("pictures/Cottage.jpeg");
+        Image newImage = new Image();
+        try {
+            byte[] bytes = image.getBytes();
+            newImage.setImage(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        imageRepository.saveAndFlush(newImage);
+        newAds.setImage(newImage.getId());
         adsRepository.save(newAds);
         return adsMapper.mapAdsToAdsDto(newAds);
     }
@@ -81,8 +94,17 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public void updateImageAdDto(long id, MultipartFile image) {
+    public void updateImageAdsDto(long id, MultipartFile image) {
         Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-        ads.setImage("pictures/NewCottage.jpeg");
+        Image newImage = new Image();
+        try {
+            byte[] bytes = image.getBytes();
+            newImage.setImage(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        imageRepository.saveAndFlush(newImage);
+        ads.setImage(newImage.getId());
+        adsRepository.save(ads);
     }
 }
