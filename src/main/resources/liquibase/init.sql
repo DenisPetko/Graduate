@@ -34,4 +34,12 @@ CREATE TABLE comments
     text              VARCHAR(32)
 );
 
+-- changeset Couldlie:100
+CREATE TABLE image
+(
+    id                BIGSERIAL PRIMARY KEY,
+    image             bytea NOT NULL
+);
+
+
 
