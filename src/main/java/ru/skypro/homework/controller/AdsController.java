@@ -61,9 +61,8 @@ public class AdsController {
             description = "Forbidden"
     )
     @PostMapping(value = "/ads", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AdsDto> addAds(@RequestPart CreateAdsDto createAdsDto, @RequestPart MultipartFile image) {
-        adsService.addAd(createAdsDto, image);
-        return ResponseEntity.ok(adsService.addAd(createAdsDto, image));
+    public ResponseEntity<AdsDto> addAd(@RequestPart CreateAdsDto properties, @RequestPart MultipartFile image) {
+        return ResponseEntity.ok(adsService.addAds(properties, image));
     }
 
     @Operation(summary = "Получить комментарии объявления")
@@ -124,7 +123,7 @@ public class AdsController {
     )
     @GetMapping("/ads/{adsId}")
     public ResponseEntity<FullAdsDto> getAds(@PathVariable long adsId) {
-        return ResponseEntity.ok(adsService.getFullAd(adsId));
+        return ResponseEntity.ok(adsService.getFullAds(adsId));
     }
 
     @Operation(summary = "Удалить объявление")
@@ -143,7 +142,7 @@ public class AdsController {
 
     @DeleteMapping("/ads/{adsId}")
     public ResponseEntity<?> removeAds(@PathVariable long adsId) {
-        return ResponseEntity.ok(adsService.removeAdDto(adsId));
+        return ResponseEntity.ok(adsService.removeAdsDto(adsId));
     }
 
     @Operation(summary = "Обновить информацию об объявлении")
@@ -169,7 +168,7 @@ public class AdsController {
 
     @PatchMapping("/ads/{adsId}")
     public ResponseEntity<AdsDto> updateAds(@PathVariable long adsId, @RequestBody CreateAdsDto createAdsDto) {
-        return ResponseEntity.ok(adsService.updateAdDto(adsId, createAdsDto));
+        return ResponseEntity.ok(adsService.updateAdsDto(adsId, createAdsDto));
     }
 
     @Operation(summary = "Удалить комментарий")
