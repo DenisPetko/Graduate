@@ -13,13 +13,13 @@ public interface AdsService {
 
     ResponseWrapperAdsDto getAllAdsDto();
 
-    AdsDto addAd(CreateAdsDto createAdsDto, MultipartFile image);
+    AdsDto addAds(CreateAdsDto createAdsDto, MultipartFile image);
 
-    FullAdsDto getFullAd(long id);
+    FullAdsDto getFullAds(long id);
 
-    boolean removeAdDto(long id);
+    boolean removeAdsDto(long id);
 
-    AdsDto updateAdDto(long id, CreateAdsDto adDto);
+    AdsDto updateAdsDto(long id, CreateAdsDto adDto);
 
     ResponseWrapperAdsDto getAllAdsMe();
 

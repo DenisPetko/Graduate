@@ -41,7 +41,7 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public AdsDto addAd(CreateAdsDto createAdsDto, MultipartFile image) {
+    public AdsDto addAds(CreateAdsDto createAdsDto, MultipartFile image) {
         Ads newAds = adsMapper.mapCreatedAdsDtoToAds(createAdsDto);
         newAds.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
         Image newImage = new Image();
@@ -58,13 +58,13 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public FullAdsDto getFullAd(long id) {
+    public FullAdsDto getFullAds(long id) {
         Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
         return adsMapper.mapAdsToFullAdsDto(ads);
     }
 
     @Override
-    public boolean removeAdDto(long id) {
+    public boolean removeAdsDto(long id) {
         Optional<User> user = userService.findAuthUser();
         if (user.isPresent()) {
             adsRepository.deleteById(id);
@@ -73,7 +73,7 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public AdsDto updateAdDto(long id, CreateAdsDto createAdsDto) {
+    public AdsDto updateAdsDto(long id, CreateAdsDto createAdsDto) {
         Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
         Optional<User> user = userService.findAuthUser();
         if (user.isPresent()) {
