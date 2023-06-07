@@ -10,5 +10,5 @@ public interface CommentService {
     ResponseWrapperCommentDto getComments(long adsId);
     CommentDto addComment(long adId, CommentDto commentDto);
     boolean deleteComment(long adsId, long commentId);
-    CommentDto updateComment(long adsId, long commentId);
+    CommentDto updateComment(long adsId, long commentId, CommentDto commentDto);
 }
