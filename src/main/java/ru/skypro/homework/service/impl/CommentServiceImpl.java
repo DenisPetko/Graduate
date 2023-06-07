@@ -47,7 +47,6 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentMapper.mapToComment(commentDto);
         User user = userService.findAuthUser().orElseThrow(UserNotFoundException::new);
         comment.setAuthor(user);
-        comment.setAuthorFirstName(commentDto.getAuthorFirstName());
         comment.setAds(ads);
         comment.setCreatedAt(LocalDateTime.now());
         comment.setText(commentDto.getText());
@@ -64,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto updateComment(long adsId, long commentId) {
+    public CommentDto updateComment(long adsId, long commentId, CommentDto commentDto) {
         adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
         Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
         return commentMapper.mapToCommentDto(comment);

@@ -12,9 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
-import ru.skypro.homework.repository.AdsRepository;
-import ru.skypro.homework.service.impl.AdsServiceImpl;
-import ru.skypro.homework.service.impl.CommentServiceImpl;
+import ru.skypro.homework.service.AdsService;
+import ru.skypro.homework.service.CommentService;
 
 
 @RestController
@@ -22,9 +21,8 @@ import ru.skypro.homework.service.impl.CommentServiceImpl;
 @Tag(name = "Объявления", description = "API по работе с объявлениями")
 @RequiredArgsConstructor
 public class AdsController {
-    private final AdsServiceImpl adsService;
-    private final CommentServiceImpl commentService;
-    private final AdsRepository adsRepository;
+    private final AdsService adsService;
+    private final CommentService commentService;
 
     @Operation(summary = "Получить все объявления")
     @ApiResponse(
@@ -214,8 +212,8 @@ public class AdsController {
             description = "Forbidden"
     )
     @PatchMapping("/ads/{adsId}/comments/{commentId}")
-    public ResponseEntity<CommentDto> updateComment(@PathVariable long adsId, @PathVariable long commentId) {
-        return ResponseEntity.ok(commentService.updateComment(adsId, commentId));
+    public ResponseEntity<CommentDto> updateComment(@PathVariable long adsId, @PathVariable long commentId, @RequestBody CommentDto commentDto) {
+        return ResponseEntity.ok(commentService.updateComment(adsId, commentId, commentDto));
     }
 
     @Operation(summary = "Получить объявления авторизованного пользователя")

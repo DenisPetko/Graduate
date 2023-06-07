@@ -25,10 +25,6 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "ads_id", nullable = false)
     private Ads ads;
-    @Column(name = "author_image_id")
-    private long authorImage;
-    @Column(name = "author_first_name")
-    private String authorFirstName;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column
