@@ -6,15 +6,12 @@ import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.model.Comment;
 
 import java.time.ZoneId;
-import java.util.Optional;
 @Component
 public class CommentMapperImpl implements CommentMapper {
     public CommentDto mapToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setPk(comment.getId());
         commentDto.setAuthor(comment.getAuthor());
-        commentDto.setAuthorImage("pictures/user.jpeg");
-        commentDto.setAuthorFirstName(comment.getAuthor().getFirstName());
         commentDto.setCreatedAt(comment.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         commentDto.setText(comment.getText());
         return commentDto;
