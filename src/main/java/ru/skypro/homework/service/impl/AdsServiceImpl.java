@@ -12,14 +12,11 @@ import ru.skypro.homework.exception.UserNotFoundException;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.model.Ads;
 import ru.skypro.homework.model.Image;
-import ru.skypro.homework.model.Role;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdsRepository;
 import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.UserService;
-
-import javax.imageio.ImageReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
@@ -44,13 +41,7 @@ public class AdsServiceImpl implements AdsService {
     public AdsDto addAds(CreateAdsDto createAdsDto, MultipartFile image) {
         Ads newAds = adsMapper.mapCreatedAdsDtoToAds(createAdsDto);
         newAds.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
-        Image newImage = new Image();
-        try {
-            byte[] bytes = image.getBytes();
-            newImage.setImage(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Image newImage = getNewImage(image);
         imageRepository.saveAndFlush(newImage);
         newAds.setImage(newImage.getId());
         adsRepository.save(newAds);
@@ -68,8 +59,9 @@ public class AdsServiceImpl implements AdsService {
         Optional<User> user = userService.findAuthUser();
         if (user.isPresent()) {
             adsRepository.deleteById(id);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -96,6 +88,13 @@ public class AdsServiceImpl implements AdsService {
     @Override
     public void updateImageAdsDto(long id, MultipartFile image) {
         Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
+        Image newImage = getNewImage(image);
+        imageRepository.saveAndFlush(newImage);
+        ads.setImage(newImage.getId());
+        adsRepository.save(ads);
+    }
+
+    private static Image getNewImage(MultipartFile image) {
         Image newImage = new Image();
         try {
             byte[] bytes = image.getBytes();
@@ -103,8 +102,6 @@ public class AdsServiceImpl implements AdsService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        imageRepository.saveAndFlush(newImage);
-        ads.setImage(newImage.getId());
-        adsRepository.save(ads);
+        return newImage;
     }
 }

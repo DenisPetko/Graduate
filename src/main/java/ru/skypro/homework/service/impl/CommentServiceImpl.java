@@ -31,12 +31,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseWrapperCommentDto getComments(long adsId) {
-        List<Comment> commentList = commentRepository.findAll();
+        Ads ads = adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
+        List<Comment> commentList = ads.getComments();
         List<CommentDto> commentDtoList = new ArrayList<>();
         for (Comment comment : commentList) {
-            if (adsId == comment.getAds().getId()) {
-                commentDtoList.add(commentMapper.mapToCommentDto(comment));
-            }
+            commentDtoList.add(commentMapper.mapToCommentDto(comment));
         }
         return new ResponseWrapperCommentDto(commentDtoList);
     }
@@ -58,8 +57,9 @@ public class CommentServiceImpl implements CommentService {
         Optional<User> user = userService.findAuthUser();
         if (user.isPresent()) {
             commentRepository.deleteById(commentId);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
