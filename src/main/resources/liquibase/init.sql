@@ -15,19 +15,19 @@ CREATE TABLE users
 
 CREATE TABLE ads
 (
-    id          BIGSERIAL PRIMARY KEY,
+    id          INT PRIMARY KEY,
     author_id   BIGINT       NOT NULL,
-    image_id    BIGINT       NOT NULL,
+    image_id    VARCHAR(255) NOT NULL,
     price       INT          NOT NULL,
-    title       VARCHAR(500) NOT NULL,
-    description VARCHAR(32)
+    title       VARCHAR(32)  NOT NULL,
+    description VARCHAR(500)
 );
 
 CREATE TABLE comments
 (
     id                BIGSERIAL PRIMARY KEY,
     author_id         BIGINT        NOT NULL,
-    ads_id            BIGINT        NOT NULL,
+    ads_id            INT           NOT NULL,
     author_image_id   BIGINT        NOT NULL,
     author_first_name VARCHAR(50)   NOT NULL,
     created_at        TIMESTAMP(50) NOT NULL,
@@ -37,8 +37,8 @@ CREATE TABLE comments
 -- changeset Couldlie:100
 CREATE TABLE image
 (
-    id                BIGSERIAL PRIMARY KEY,
-    image             bytea NOT NULL
+    id    VARCHAR PRIMARY KEY,
+    image bytea NOT NULL
 );
 
 

@@ -15,8 +15,7 @@ import javax.persistence.*;
 public class Image {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
