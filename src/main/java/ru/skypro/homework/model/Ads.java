@@ -20,7 +20,7 @@ import java.util.List;
 public class Ads {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;

@@ -5,9 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 /**
  * Класс, описывающий пользователя
  **/
@@ -19,7 +18,6 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private long id;
     @Column(length = 32, name = "user_name", nullable = false)
     private String username;
@@ -36,6 +34,13 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name = "phone", length = 18)
     private String phone;
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ads> ads = new ArrayList<>();
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
