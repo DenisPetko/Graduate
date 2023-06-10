@@ -12,11 +12,12 @@ public class UserMapperImpl implements UserMapper {
 
     public UserDto mapToUserDTO(User user) {
         UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
+        userDto.setId((int) user.getId());
         userDto.setEmail(user.getEmail());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setPhone(user.getPhone());
+
          return userDto;
     }
 

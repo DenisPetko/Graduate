@@ -14,10 +14,9 @@ import ru.skypro.homework.model.Ads;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdsRepository;
-import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.AdsService;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +28,7 @@ public class AdsServiceImpl implements AdsService {
     private final AdsMapper adsMapper;
     private final AdsRepository adsRepository;
     private final UserService userService;
-    private final ImageRepository imageRepository;
+    private final ImageService imageService;
 
     @Override
     public ResponseWrapperAdsDto getAllAdsDto() {
@@ -41,9 +40,8 @@ public class AdsServiceImpl implements AdsService {
     public AdsDto addAds(CreateAdsDto createAdsDto, MultipartFile image) {
         Ads newAds = adsMapper.mapCreatedAdsDtoToAds(createAdsDto);
         newAds.setAuthor(userService.findAuthUser().orElseThrow(UserNotFoundException::new));
-        Image newImage = getNewImage(image);
-        imageRepository.saveAndFlush(newImage);
-        newAds.setImage(newImage.getId());
+        Image newImage = imageService.saveImage(image);
+        newAds.setImage(newImage);
         adsRepository.save(newAds);
         return adsMapper.mapAdsToAdsDto(newAds);
     }
@@ -88,20 +86,9 @@ public class AdsServiceImpl implements AdsService {
     @Override
     public void updateImageAdsDto(long id, MultipartFile image) {
         Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-        Image newImage = getNewImage(image);
-        imageRepository.saveAndFlush(newImage);
-        ads.setImage(newImage.getId());
+        Image updateImage = imageService.updateImage(image, ads.getImage());
+        ads.setImage(updateImage);
         adsRepository.save(ads);
     }
 
-    private static Image getNewImage(MultipartFile image) {
-        Image newImage = new Image();
-        try {
-            byte[] bytes = image.getBytes();
-            newImage.setImage(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return newImage;
-    }
 }

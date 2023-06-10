@@ -10,17 +10,18 @@ CREATE TABLE users
     role       VARCHAR(5)   NOT NULL,
     first_name VARCHAR(32),
     last_name  VARCHAR(32),
-    phone      VARCHAR(18)
+    phone      VARCHAR(18),
+    image_id   VARCHAR(255)
 );
 
 CREATE TABLE ads
 (
     id          BIGSERIAL PRIMARY KEY,
-    author_id   BIGINT       NOT NULL,
-    image_id    BIGINT       NOT NULL,
-    price       INT          NOT NULL,
-    title       VARCHAR(500) NOT NULL,
-    description VARCHAR(32)
+    author_id   BIGINT      NOT NULL,
+    image_id    VARCHAR(255),
+    price       INT         NOT NULL,
+    title       VARCHAR(32) NOT NULL,
+    description VARCHAR(500)
 );
 
 CREATE TABLE comments
@@ -37,8 +38,8 @@ CREATE TABLE comments
 -- changeset Couldlie:100
 CREATE TABLE image
 (
-    id                BIGSERIAL PRIMARY KEY,
-    image             bytea NOT NULL
+    id    VARCHAR PRIMARY KEY,
+    image bytea NOT NULL
 );
 
 

@@ -14,9 +14,9 @@ public class AdsMapperImpl implements AdsMapper {
     @Override
     public AdsDto mapAdsToAdsDto(Ads ads) {
         AdsDto adsDto = new AdsDto();
-        adsDto.setAuthor(ads.getAuthor());
-        adsDto.setImage(ads.getImage());
-        adsDto.setPk(ads.getId());
+        adsDto.setAuthor((int) ads.getAuthor().getId());
+        adsDto.setImage("/ads/" + ads.getImage().getId() + "/image");
+        adsDto.setPk((int)ads.getId());
         adsDto.setPrice(ads.getPrice());
         adsDto.setTitle(ads.getTitle());
         return adsDto;
@@ -25,8 +25,8 @@ public class AdsMapperImpl implements AdsMapper {
     @Override
     public Ads mapAdsDtoToAds(AdsDto adsDto) {
         Ads ads = new Ads();
-        ads.setAuthor(adsDto.getAuthor());
-        ads.setImage(adsDto.getImage());
+        ads.getAuthor().setId(adsDto.getAuthor());
+        ads.getImage().setId(adsDto.getImage());
         ads.setId(adsDto.getPk());
         ads.setPrice(adsDto.getPrice());
         ads.setTitle(adsDto.getTitle());
@@ -52,13 +52,14 @@ public class AdsMapperImpl implements AdsMapper {
     public Ads mapCreatedAdsDtoToAds(CreateAdsDto createAdsDto) {
         Ads ads = new Ads();
         ads.setTitle(createAdsDto.getTitle());
+        ads.setDescription(createAdsDto.getDescription());
         ads.setPrice(createAdsDto.getPrice());
         return ads;
     }
 
     @Override
     public Collection<AdsDto> mapAdsListToAdsDtoList(Collection<Ads> adsCollection) {
-        Collection<AdsDto> adsDtoCollection = new ArrayList<>();
+        Collection<AdsDto> adsDtoCollection = new ArrayList<>(adsCollection.size());
         for (Ads ads : adsCollection) {
             adsDtoCollection.add(mapAdsToAdsDto(ads));
         }
