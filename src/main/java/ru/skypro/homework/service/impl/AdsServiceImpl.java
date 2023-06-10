@@ -17,7 +17,6 @@ import ru.skypro.homework.repository.AdsRepository;
 import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -92,14 +91,4 @@ public class AdsServiceImpl implements AdsService {
         adsRepository.save(ads);
     }
 
-    private static Image getNewImage(MultipartFile image) {
-        Image newImage = new Image();
-        try {
-            byte[] bytes = image.getBytes();
-            newImage.setImage(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return newImage;
-    }
 }

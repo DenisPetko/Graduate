@@ -13,5 +13,5 @@ public interface ImageService {
 
     Image updateImage(MultipartFile image, Image oldImage);
 
-    byte[] getImage(long id);
+    byte[] getImage(String id);
 }

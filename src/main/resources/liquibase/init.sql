@@ -10,16 +10,17 @@ CREATE TABLE users
     role       VARCHAR(5)   NOT NULL,
     first_name VARCHAR(32),
     last_name  VARCHAR(32),
-    phone      VARCHAR(18)
+    phone      VARCHAR(18),
+    image_id   VARCHAR(255)
 );
 
 CREATE TABLE ads
 (
-    id          INT PRIMARY KEY,
-    author_id   BIGINT       NOT NULL,
-    image_id    VARCHAR(255) NOT NULL,
-    price       INT          NOT NULL,
-    title       VARCHAR(32)  NOT NULL,
+    id          BIGSERIAL PRIMARY KEY,
+    author_id   BIGINT      NOT NULL,
+    image_id    VARCHAR(255),
+    price       INT         NOT NULL,
+    title       VARCHAR(32) NOT NULL,
     description VARCHAR(500)
 );
 
@@ -27,7 +28,7 @@ CREATE TABLE comments
 (
     id                BIGSERIAL PRIMARY KEY,
     author_id         BIGINT        NOT NULL,
-    ads_id            INT           NOT NULL,
+    ads_id            BIGINT        NOT NULL,
     author_image_id   BIGINT        NOT NULL,
     author_first_name VARCHAR(50)   NOT NULL,
     created_at        TIMESTAMP(50) NOT NULL,

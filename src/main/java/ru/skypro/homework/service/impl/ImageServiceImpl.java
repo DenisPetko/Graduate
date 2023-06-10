@@ -9,6 +9,7 @@ import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.ImageService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +26,7 @@ public class ImageServiceImpl implements ImageService {
         } catch (IOException e){
             e.printStackTrace();
         }
+        newImage.setId(UUID.randomUUID().toString());
         return repository.saveAndFlush(newImage);
     }
 
@@ -40,7 +42,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public byte[] getImage(long id) {
+    public byte[] getImage(String id) {
         Image image = repository.findById(id).orElseThrow(ImageNotFoundException::new);
         return image.getImage();
     }
