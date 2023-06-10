@@ -20,12 +20,13 @@ import java.util.List;
 public class Ads {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
-    @Column(name = "image_id")
-    private long image;
+    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "image_id")
+    private Image image;
     private int price;
     private String title;
     private String description;

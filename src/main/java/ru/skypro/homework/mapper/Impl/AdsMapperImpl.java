@@ -15,7 +15,7 @@ public class AdsMapperImpl implements AdsMapper {
     public AdsDto mapAdsToAdsDto(Ads ads) {
         AdsDto adsDto = new AdsDto();
         adsDto.setAuthor(ads.getAuthor());
-        adsDto.setImage(ads.getImage());
+        adsDto.setImage("/ads/" + ads.getImage().getId() + "/image");
         adsDto.setPk(ads.getId());
         adsDto.setPrice(ads.getPrice());
         adsDto.setTitle(ads.getTitle());
@@ -26,7 +26,7 @@ public class AdsMapperImpl implements AdsMapper {
     public Ads mapAdsDtoToAds(AdsDto adsDto) {
         Ads ads = new Ads();
         ads.setAuthor(adsDto.getAuthor());
-        ads.setImage(adsDto.getImage());
+        ads.getImage().setId(adsDto.getImage());
         ads.setId(adsDto.getPk());
         ads.setPrice(adsDto.getPrice());
         ads.setTitle(adsDto.getTitle());
