@@ -15,6 +15,7 @@ import ru.skypro.homework.exception.ImageNotFoundException;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
+import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final ImageService imageService;
+    private final ImageRepository imageRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -70,7 +72,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void updateUserImage(MultipartFile image) {
         Image newImage = imageService.saveImage(image);
         long id = findAuthUser().get().getId();
-        userRepository.setNewImage(newImage.getId(), id);
+        String id1 = newImage.getId();
+        userRepository.setNewImage(id1, id);
     }
 
     @Override
