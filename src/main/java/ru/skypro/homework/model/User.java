@@ -1,6 +1,7 @@
 package ru.skypro.homework.model;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

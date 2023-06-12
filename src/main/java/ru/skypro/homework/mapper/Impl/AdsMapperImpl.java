@@ -9,6 +9,7 @@ import ru.skypro.homework.model.Ads;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
 @Component
 public class AdsMapperImpl implements AdsMapper {
     @Override
