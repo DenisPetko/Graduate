@@ -6,19 +6,23 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.service.UserService;
 
 @RestController
 @RequestMapping("/")
+@Slf4j
+@CrossOrigin(value = "http://localhost:3000")
 @Tag(name = "Пользователи", description = "API для работы с пользователями")
 @RequiredArgsConstructor
 public class UserController {
-
+    private final UserService userService;
 
     @Operation(summary = "Обновление пароля")
     @ApiResponse(
@@ -39,7 +43,7 @@ public class UserController {
     )
     @PostMapping("/users/set_password")
     public ResponseEntity<Void> setPassword(@RequestBody NewPasswordDto newPasswordDto) {
-        //todo
+        userService.updateUserPassword(newPasswordDto);
         return ResponseEntity.ok().build();
     }
 
@@ -65,8 +69,7 @@ public class UserController {
     )
     @GetMapping("/users/me")
     public ResponseEntity<UserDto> getUser() {
-//todo:
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(userService.getUserDto());
     }
 
     @Operation(summary = "Обновить информацию об авторизованном пользователе")
@@ -95,9 +98,8 @@ public class UserController {
     )
     @PatchMapping("/users/me")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
-        //todo
-        UserDto newUserDto = new UserDto(); // исправить!!!
-        return ResponseEntity.ok().body(newUserDto);
+        userService.updateUserDto(userDto);
+        return ResponseEntity.ok().body(userDto);
     }
 
 
@@ -112,7 +114,7 @@ public class UserController {
     )
     @PatchMapping(value = "/users/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> updateUserImage(@RequestPart MultipartFile image) {
-        //todo
+        userService.updateUserImage(image);
         return ResponseEntity.ok().build();
     }
 }

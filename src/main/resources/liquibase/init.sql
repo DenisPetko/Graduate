@@ -11,7 +11,7 @@ CREATE TABLE users
     first_name VARCHAR(32),
     last_name  VARCHAR(32),
     phone      VARCHAR(18),
-    image_id   VARCHAR(255)
+    image_id    VARCHAR(255)
 );
 
 CREATE TABLE ads
