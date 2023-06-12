@@ -37,7 +37,7 @@ public class User implements UserDetails {
     private String phone;
     @OneToOne
     @JoinColumn(name = "image_id")
-    private Image image;
+    private Image image_id;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ads> ads = new ArrayList<>();
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
