@@ -27,7 +27,6 @@ import static ru.skypro.homework.model.Role.USER;
 @RestController
 @AllArgsConstructor
 public class AuthController {
-
     private final AuthService authService;
 
     @Operation(
@@ -85,7 +84,7 @@ public class AuthController {
     )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginReqDto req) {
-        log.info("New request for register:{},{}}",req.getUsername());
+        log.info("New login:{},{}}",req.getUsername());
         if (authService.login(req.getUsername(), req.getPassword())) {
             return ResponseEntity.ok().build();
         } else {

@@ -1,6 +1,7 @@
 package ru.skypro.homework.model;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -34,7 +35,7 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name = "phone", length = 18)
     private String phone;
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "image_id")
     private Image image;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
