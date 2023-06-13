@@ -67,8 +67,7 @@ public class CommentController {
     @PostMapping("/ads/{id}/comments")
     public ResponseEntity<CommentDto> addComment(@PathVariable long id, @RequestBody String commentDto) {
         //todo
-        CommentDto commentDto1 = new CommentDto();
-//        commentService.addComment(id, commentDto)
+        commentService.addComment(id, commentDto);
         return ResponseEntity.ok().build();
     }
 
