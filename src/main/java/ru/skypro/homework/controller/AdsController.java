@@ -109,7 +109,7 @@ public class AdsController {
     )
 
     @PostMapping("/ads/{adsId}/comments")
-    public ResponseEntity<CommentDto> addComment(@PathVariable long adsId, @RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> addComment(@PathVariable long adsId, @RequestBody String commentDto) {
         return ResponseEntity.ok(commentService.addComment(adsId, commentDto));
     }
 

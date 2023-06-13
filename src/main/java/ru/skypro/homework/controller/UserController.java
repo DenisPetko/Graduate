@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 
 @RestController
@@ -23,6 +24,8 @@ import ru.skypro.homework.service.UserService;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    private final ImageService imageService;
 
     @Operation(summary = "Обновление пароля")
     @ApiResponse(
@@ -116,5 +119,17 @@ public class UserController {
     public ResponseEntity<byte[]> updateUserImage(@RequestPart MultipartFile image) {
         userService.updateUserImage(image);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Получить картинку профиля",
+            tags = "Объявления",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
+            })
+    @GetMapping(value = "/users/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") String id){
+        return ResponseEntity.ok(imageService.getImage(id));
     }
 }

@@ -1,6 +1,7 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
@@ -70,10 +72,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void updateUserImage(MultipartFile image) {
+        log.info("New avatar {}", image.getName());
         Image newImage = imageService.saveImage(image);
-        long id = findAuthUser().get().getId();
-        String id1 = newImage.getId();
-        userRepository.setNewImage(id1, id);
+        User user = findAuthUser().get();
+        user.setImage(newImage);
+        userRepository.save(user);
     }
 
     @Override

@@ -1,11 +1,13 @@
 package ru.skypro.homework.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.skypro.homework.model.User;
 
-import java.time.LocalDateTime;
-
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommentDto {
     private long pk; //  'id комментария'
     private User author;
