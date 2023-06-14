@@ -21,7 +21,9 @@ public class UserMapperImpl implements UserMapper {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setPhone(user.getPhone());
-        userDto.setImage("/users/" + user.getImage().getId() + "/image");
+        if (user.getImage() != null) {
+            userDto.setImage("/users/" + user.getImage().getId() + "/image");
+        }
         return userDto;
     }
 
