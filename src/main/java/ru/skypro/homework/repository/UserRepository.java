@@ -12,7 +12,7 @@ import java.util.Optional;
  * Интерфейс для работы с базой данных пользователей
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByUsername(String email);
     @Transactional
     @Modifying
