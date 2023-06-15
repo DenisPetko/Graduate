@@ -19,7 +19,6 @@ public class CommentMapperImpl implements CommentMapper {
 
     public Comment mapToComment(CommentDto commentDto) {
         Comment mappedComment = new Comment();
-        mappedComment.setId(commentDto.getPk());
         mappedComment.setText(commentDto.getText());
         return mappedComment;
     }

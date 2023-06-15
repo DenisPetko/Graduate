@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public boolean register(RegisterReqDto registerReqDTO, Role role) {
-    if (userRepository.findByEmail(registerReqDTO.getUsername()).isPresent()) {
+    if (userRepository.findByUsername(registerReqDTO.getUsername()).isPresent()) {
       return false;
     }
     User regUser = userMapper.mapToUser(registerReqDTO);
@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
     UserDetails principal = (UserDetails) authentication.getPrincipal();
     String currentEmail = principal.getUsername();
 
-    User user = userRepository.findByEmail(currentEmail).orElseThrow(UserNotFoundException::new);
+    User user = userRepository.findByUsername(currentEmail).orElseThrow(UserNotFoundException::new);
     UserDetails userDetails = manager.loadUserByUsername(user.getUsername());
     String encryptedPassword = userDetails.getPassword();
     if (encoder.matches(newPasswordDto.getCurrentPassword(), encryptedPassword)) {

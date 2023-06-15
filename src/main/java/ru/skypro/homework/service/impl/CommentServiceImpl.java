@@ -29,8 +29,10 @@ public class CommentServiceImpl implements CommentService {
     private final AdsRepository adsRepository;
     private final UserService userService;
 
+    private final ImageServiceImpl imageService;
+
     @Override
-    public ResponseWrapperCommentDto getComments(long adsId) {
+    public ResponseWrapperCommentDto getComments(int adsId) {
         Ads ads = adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
         List<Comment> commentList = ads.getComments();
         List<CommentDto> commentDtoList = new ArrayList<>();
@@ -41,7 +43,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto addComment(long adsId, String commentStr) {
+    public CommentDto addComment(int adsId, String commentStr) {
         Comment comment = new Comment();
         Ads ads = adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
         User user = userService.findAuthUser().orElseThrow(UserNotFoundException::new);
@@ -49,12 +51,18 @@ public class CommentServiceImpl implements CommentService {
         comment.setAds(ads);
         comment.setCreatedAt(LocalDateTime.now());
         comment.setText(commentStr);
+        comment.setAuthorFirstName(user.getFirstName());
+        if (user.getImage() == null) {
+        } else {
+            comment.setImage(user.getImage());
+        }
         CommentDto commentDto = commentMapper.mapToCommentDto(comment);
+        commentRepository.save(comment);
         return commentDto;
     }
 
     @Override
-    public boolean deleteComment(long adsId, long commentId) {
+    public boolean deleteComment(int adsId, int commentId) {
         Optional<User> user = userService.findAuthUser();
         if (user.isPresent()) {
             commentRepository.deleteById(commentId);
@@ -64,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto updateComment(long adsId, long commentId, CommentDto commentDto) {
+    public CommentDto updateComment(int adsId, int commentId, CommentDto commentDto) {
         adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
         Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
         return commentMapper.mapToCommentDto(comment);
