@@ -1,7 +1,6 @@
 package ru.skypro.homework.model;
 
 import lombok.*;
-import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,13 +18,11 @@ import java.util.*;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @Column(length = 32, name = "user_name", nullable = false)
     private String username;
     @Column(name = "password", length = 250, nullable = false)
     private String password;
-    @Column(name = "email", length = 32, nullable = false)
-    private String email;
     @Column(name = "role", length = 5, nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;

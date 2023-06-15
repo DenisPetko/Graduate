@@ -7,5 +7,5 @@ import ru.skypro.homework.model.Comment;
  * Интерфейс для работы с базой данных комментариев
  */
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Integer> {
 }

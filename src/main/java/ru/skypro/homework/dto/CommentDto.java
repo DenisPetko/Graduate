@@ -9,7 +9,7 @@ import ru.skypro.homework.model.User;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDto {
-    private long pk; //  'id комментария'
+    private int pk; //  'id комментария'
     private User author;
     private String authorImage;
     private String authorFirstName;
