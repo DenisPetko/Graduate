@@ -4,7 +4,7 @@
 CREATE TABLE users
 (
     id         SERIAL PRIMARY KEY,
-    user_name  VARCHAR(32)  NOT NULL,
+    user_name  VARCHAR(32)  NOT NULL UNIQUE,
     password   VARCHAR(250) NOT NULL,
     role       VARCHAR(5)   NOT NULL,
     first_name VARCHAR(32),
