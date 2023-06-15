@@ -14,6 +14,7 @@ import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.Image;
+import ru.skypro.homework.model.Role;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.ImageService;
@@ -85,5 +86,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void updateUserPassword(NewPasswordDto passwordDto) {
         String encodes = encoder.encode(passwordDto.getNewPassword());
         userRepository.setNewPassword(encodes, findAuthUser().get().getId());
+    }
+
+    @Override
+    public void setNewAdminUser(int idOfUser) {
+        User user = userRepository.getReferenceById(idOfUser);
+        user.setRole(Role.ADMIN);
+        userRepository.save(user);
     }
 }

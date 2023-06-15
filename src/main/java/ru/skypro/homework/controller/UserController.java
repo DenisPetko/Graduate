@@ -132,4 +132,17 @@ public class UserController {
     public ResponseEntity<byte[]> getImage(@PathVariable("id") String id){
         return ResponseEntity.ok(imageService.getImage(id));
     }
+
+    @Operation(
+            summary = "Обновить роль пользователя",
+            tags = "Объявления",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
+            })
+    @PatchMapping("/setAdminRole/{id}")
+    public ResponseEntity<Void> setNewRoleToUser(@PathVariable int id) {
+        userService.setNewAdminUser(id);
+        return ResponseEntity.ok().build();
+    }
 }
