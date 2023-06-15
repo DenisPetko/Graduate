@@ -270,15 +270,4 @@ public class AdsController {
     public ResponseEntity<byte[]> getImage(@PathVariable("id") String id){
         return ResponseEntity.ok(imageService.getImage(id));
     }
-//    @Operation(
-//            summary = "Получить картинку комментатора",
-//            tags = "Объявления",
-//            responses = {
-//                    @ApiResponse(responseCode = "200", description = "OK"),
-//                    @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
-//            })
-//    @GetMapping(value = "/ads/{adsId}/comments/{commentId}", produces = MediaType.IMAGE_PNG_VALUE)
-//    public ResponseEntity<byte[]> getCommentAuthorFirstName(@PathVariable("id") String id,  @PathVariable int commentId){
-//        return ResponseEntity.ok(commentService.(id));
-//    }
 }
