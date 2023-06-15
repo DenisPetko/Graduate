@@ -15,14 +15,14 @@ public interface AdsService {
 
     AdsDto addAds(CreateAdsDto createAdsDto, MultipartFile image);
 
-    FullAdsDto getFullAds(long id);
+    FullAdsDto getFullAds(int id);
 
-    boolean removeAdsDto(long id);
+    boolean removeAdsDto(int id);
 
-    AdsDto updateAdsDto(long id, CreateAdsDto adDto);
+    AdsDto updateAdsDto(int id, CreateAdsDto adDto);
 
     ResponseWrapperAdsDto getAllAdsMe();
 
-    void updateImageAdsDto(long id, MultipartFile image);
+    void updateImageAdsDto(int id, MultipartFile image);
 
 }

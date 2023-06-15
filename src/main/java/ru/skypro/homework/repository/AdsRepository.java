@@ -7,6 +7,6 @@ import ru.skypro.homework.model.Ads;
  * Интерфейс для работы с базой данных объявлений
  */
 @Repository
-public interface AdsRepository extends JpaRepository<Ads, Long> {
+public interface AdsRepository extends JpaRepository<Ads, Integer> {
 
 }

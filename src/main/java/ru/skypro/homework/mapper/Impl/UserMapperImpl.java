@@ -8,7 +8,6 @@ import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.ImageRepository;
-import ru.skypro.homework.repository.UserRepository;
 
 @Component
 @RequiredArgsConstructor
@@ -16,8 +15,7 @@ public class UserMapperImpl implements UserMapper {
     private final ImageRepository imageRepository;
     public UserDto mapToUserDTO(User user) {
         UserDto userDto = new UserDto();
-        userDto.setId((int) user.getId());
-        userDto.setEmail(user.getEmail());
+        userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setPhone(user.getPhone());
@@ -29,8 +27,7 @@ public class UserMapperImpl implements UserMapper {
 
     public User mapToUser(UserDto userDto) {
         User mappedUser = new User();
-        mappedUser.setId(userDto.getId());
-        mappedUser.setEmail(userDto.getEmail());
+        userDto.setId(userDto.getId());
         mappedUser.setFirstName(userDto.getFirstName());
         mappedUser.setLastName(userDto.getLastName());
         mappedUser.setPhone(userDto.getPhone());
@@ -47,7 +44,6 @@ public class UserMapperImpl implements UserMapper {
         mappedUser.setLastName(registerReqDto.getLastName());
         mappedUser.setPhone(registerReqDto.getPhone());
         mappedUser.setRole(registerReqDto.getRole());
-        mappedUser.setEmail(registerReqDto.getUsername());
         return mappedUser;
     }
 }
