@@ -15,6 +15,7 @@ import ru.skypro.homework.repository.AdsRepository;
 import ru.skypro.homework.repository.CommentRepository;
 import ru.skypro.homework.service.CommentService;
 import ru.skypro.homework.service.UserService;
+import ru.skypro.homework.validation.ValidationForComments;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,8 +29,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
     private final AdsRepository adsRepository;
     private final UserService userService;
-
-    private final ImageServiceImpl imageService;
+    private final ValidationForComments validation;
 
     @Override
     public ResponseWrapperCommentDto getComments(int adsId) {
@@ -64,17 +64,22 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean deleteComment(int adsId, int commentId) {
         Optional<User> user = userService.findAuthUser();
-        if (user.isPresent()) {
-            commentRepository.deleteById(commentId);
-            return true;
+        if (validation.validateComments(user.get(), commentId)) {
+            if (user.isPresent()) {
+                commentRepository.deleteById(commentId);
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public CommentDto updateComment(int adsId, int commentId, CommentDto commentDto) {
-        adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
-        Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
-        return commentMapper.mapToCommentDto(comment);
+        if (validation.validateComments(userService.findAuthUser().get(), commentId)) {
+            adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
+            Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
+            return commentMapper.mapToCommentDto(comment);
+        }
+        throw new CommentNotFoundException();
     }
 }

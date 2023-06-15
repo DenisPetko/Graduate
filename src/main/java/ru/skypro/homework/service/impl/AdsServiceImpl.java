@@ -17,6 +17,8 @@ import ru.skypro.homework.repository.AdsRepository;
 import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
+import ru.skypro.homework.validation.ValidationForAds;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,11 +26,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AdsServiceImpl implements AdsService {
-
     private final AdsMapper adsMapper;
     private final AdsRepository adsRepository;
     private final UserService userService;
     private final ImageService imageService;
+    private final ValidationForAds validation;
 
     @Override
     public ResponseWrapperAdsDto getAllAdsDto() {
@@ -55,22 +57,27 @@ public class AdsServiceImpl implements AdsService {
     @Override
     public boolean removeAdsDto(int id) {
         Optional<User> user = userService.findAuthUser();
-        if (user.isPresent()) {
-            adsRepository.deleteById(id);
-            return true;
+        if (validation.validateAds(user.get(), id)) {
+
+            if (user.isPresent()) {
+                adsRepository.deleteById(id);
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public AdsDto updateAdsDto(int id, CreateAdsDto createAdsDto) {
-        Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-        Optional<User> user = userService.findAuthUser();
-        if (user.isPresent()) {
-            ads.setDescription(createAdsDto.getDescription());
-            ads.setPrice(createAdsDto.getPrice());
-            ads.setTitle(createAdsDto.getTitle());
-            return adsMapper.mapAdsToAdsDto(adsRepository.save(ads));
+        if (validation.validateAds(userService.findAuthUser().get(), id)) {
+            Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
+            Optional<User> user = userService.findAuthUser();
+            if (user.isPresent()) {
+                ads.setDescription(createAdsDto.getDescription());
+                ads.setPrice(createAdsDto.getPrice());
+                ads.setTitle(createAdsDto.getTitle());
+                return adsMapper.mapAdsToAdsDto(adsRepository.save(ads));
+            }
         }
         throw new UserNotFoundException();
     }

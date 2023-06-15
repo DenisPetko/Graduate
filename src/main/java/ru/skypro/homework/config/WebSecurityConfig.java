@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                                         .mvcMatchers(AUTH_WHITELIST)
                                         .permitAll()
                                         .mvcMatchers("/ads").permitAll()
-                                        .mvcMatchers("/ads/**", "/users/**")
+                                        .mvcMatchers("/ads/**", "/users/**", "/setAdminRole/")
                                         .authenticated()
                 )
                 .cors()
