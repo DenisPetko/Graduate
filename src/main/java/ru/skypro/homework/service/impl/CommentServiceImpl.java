@@ -65,8 +65,10 @@ public class CommentServiceImpl implements CommentService {
     public boolean deleteComment(int adsId, int commentId) {
         Optional<User> user = userService.findAuthUser();
         if (validation.validateComments(user.get(), commentId)) {
+            if (user.isPresent()) {
                 commentRepository.deleteById(commentId);
                 return true;
+            }
         }
         return false;
     }

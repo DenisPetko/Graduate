@@ -1,6 +1,7 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AuthService;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
   private final UserServiceImpl manager;
@@ -27,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public boolean login(String userName, String password) {
+    log.info("New login:{},{}}", userName);
     UserDetails userDetails = manager.loadUserByUsername(userName);
     String encryptedPassword = userDetails.getPassword();
     return encoder.matches(password, encryptedPassword);
@@ -34,6 +37,7 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public boolean register(RegisterReqDto registerReqDTO, Role role) {
+    log.info("New request for register:{},{}}",registerReqDTO.getUsername(), registerReqDTO.getRole());
     if (userRepository.findByUsername(registerReqDTO.getUsername()).isPresent()) {
       return false;
     }
