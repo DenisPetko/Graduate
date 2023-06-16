@@ -6,12 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.skypro.homework.model.User;
 
+import javax.persistence.Cacheable;
 import javax.transaction.Transactional;
 import java.util.Optional;
 /**
  * Интерфейс для работы с базой данных пользователей
  */
 @Repository
+@Cacheable
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByUsername(String email);
     @Transactional

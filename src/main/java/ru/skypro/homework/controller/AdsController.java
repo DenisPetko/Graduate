@@ -82,7 +82,7 @@ public class AdsController {
     )
     @GetMapping("/ads/{adsId}/comments")
     public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable int adsId) {
-        ResponseWrapperCommentDto comments = commentService.getComments(adsId); //todo: написать реализацию
+        ResponseWrapperCommentDto comments = commentService.getComments(adsId);
         return ResponseEntity.ok().body(comments);
     }
 
