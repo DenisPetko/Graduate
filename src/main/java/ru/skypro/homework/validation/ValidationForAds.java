@@ -14,7 +14,7 @@ public class ValidationForAds {
     public boolean validateAds(User user, int id) {
         if (user.getUsername()
                     .equals(adsRepository.getReferenceById(id).getAuthor().getUsername())
-                    || user.getRole().equals(Role.ADMIN)) {
+                    || user.getRole() == Role.ADMIN) {
                     return true;
         } else {
             throw new UserValidationException();

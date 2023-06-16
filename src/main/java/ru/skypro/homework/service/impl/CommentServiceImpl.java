@@ -73,7 +73,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto updateComment(int adsId, int commentId, CommentDto commentDto) {
-        if (validation.validateComments(userService.findAuthUser().get(), commentId)) {
+        if (validation.validateComments(userService.findAuthUser().get(), commentId)
+            && userService.findAuthUser().isPresent()) {
             adsRepository.findById(adsId).orElseThrow(AdsNotFoundException::new);
             Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFoundException::new);
             comment.setText(commentDto.getText());
