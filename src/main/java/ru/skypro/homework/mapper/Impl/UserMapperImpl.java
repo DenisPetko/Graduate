@@ -13,6 +13,7 @@ import ru.skypro.homework.repository.ImageRepository;
 @RequiredArgsConstructor
 public class UserMapperImpl implements UserMapper {
     private final ImageRepository imageRepository;
+    @Override
     public UserDto mapToUserDTO(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
@@ -25,6 +26,7 @@ public class UserMapperImpl implements UserMapper {
         return userDto;
     }
 
+    @Override
     public User mapToUser(UserDto userDto) {
         User mappedUser = new User();
         userDto.setId(userDto.getId());
