@@ -5,17 +5,16 @@ import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.model.Comment;
-import ru.skypro.homework.repository.ImageRepository;
-import ru.skypro.homework.repository.UserRepository;
-import ru.skypro.homework.service.ImageService;
-import ru.skypro.homework.service.impl.UserServiceImpl;
 
 import java.time.ZoneId;
 @Component
 @RequiredArgsConstructor
 public class CommentMapperImpl implements CommentMapper {
+
+    @Override
     public CommentDto mapToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
+        commentDto.setPk(comment.getId());
         commentDto.setAuthor(comment.getAuthor().getId());
         commentDto.setCreatedAt(comment.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         commentDto.setText(comment.getText());
@@ -26,6 +25,7 @@ public class CommentMapperImpl implements CommentMapper {
         return commentDto;
     }
 
+    @Override
     public Comment mapToComment(CommentDto commentDto) {
         Comment mappedComment = new Comment();
         mappedComment.setText(commentDto.getText());
