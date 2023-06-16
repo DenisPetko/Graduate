@@ -36,14 +36,13 @@ public class AdsMapperImpl implements AdsMapper {
     @Override
     public FullAdsDto mapAdsToFullAdsDto(Ads ads) {
         FullAdsDto fullAdsDto = new FullAdsDto();
-        fullAdsDto.setPk(ads.getId()); //todo
         fullAdsDto.setAuthorFirstName(ads.getAuthor().getFirstName());
         fullAdsDto.setAuthorLastName(ads.getAuthor().getLastName());
         fullAdsDto.setEmail(ads.getAuthor().getUsername());
         fullAdsDto.setPhone(ads.getAuthor().getPhone());
         fullAdsDto.setTitle(ads.getTitle());
         fullAdsDto.setDescription(ads.getDescription());
-        fullAdsDto.setImage("/ads/" + ads.getImage() + "/image"); //todo
+        fullAdsDto.setImage("/ads/" + ads.getImage().getId() + "/image");
         fullAdsDto.setPrice(ads.getPrice());
         return fullAdsDto;
     }

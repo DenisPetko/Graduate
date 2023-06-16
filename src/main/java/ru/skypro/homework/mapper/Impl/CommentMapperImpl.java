@@ -14,17 +14,15 @@ import java.time.ZoneId;
 @Component
 @RequiredArgsConstructor
 public class CommentMapperImpl implements CommentMapper {
-    private final ImageRepository imageRepository;
-    private final UserRepository userRepository;
-
     public CommentDto mapToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
-        commentDto.setPk(comment.getId());
-        commentDto.setAuthor(comment.getAuthor());
+        commentDto.setAuthor(comment.getAuthor().getId());
         commentDto.setCreatedAt(comment.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         commentDto.setText(comment.getText());
-        commentDto.setAuthorImage("/users/" + commentDto.getAuthor().getImage().getId() + "/image");
         commentDto.setAuthorFirstName(comment.getAuthorFirstName());
+        if (comment.getAuthor().getImage() != null) {
+            commentDto.setAuthorImage("/users/" + comment.getImage().getId() + "/image");
+        }
         return commentDto;
     }
 

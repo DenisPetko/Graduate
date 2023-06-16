@@ -11,7 +11,6 @@ public class AdsDto {
     private int pk;
     private int price;
     private String title;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -19,6 +19,7 @@ import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
 import ru.skypro.homework.validation.ValidationForAds;
 
+import javax.persistence.Cacheable;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
