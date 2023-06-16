@@ -59,7 +59,6 @@ public class AdsServiceImpl implements AdsService {
     public boolean removeAdsDto(int id) {
         Optional<User> user = userService.findAuthUser();
         if (validation.validateAds(user.get(), id)) {
-
             if (user.isPresent()) {
                 adsRepository.deleteById(id);
                 return true;
