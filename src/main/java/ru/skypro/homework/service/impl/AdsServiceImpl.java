@@ -59,10 +59,8 @@ public class AdsServiceImpl implements AdsService {
     public boolean removeAdsDto(int id) {
         Optional<User> user = userService.findAuthUser();
         if (validation.validateAds(user.get(), id)) {
-            if (user.isPresent()) {
                 adsRepository.deleteById(id);
                 return true;
-            }
         }
         return false;
     }
@@ -71,13 +69,10 @@ public class AdsServiceImpl implements AdsService {
     public AdsDto updateAdsDto(int id, CreateAdsDto createAdsDto) {
         if (validation.validateAds(userService.findAuthUser().get(), id)) {
             Ads ads = adsRepository.findById(id).orElseThrow(AdsNotFoundException::new);
-            Optional<User> user = userService.findAuthUser();
-            if (user.isPresent()) {
                 ads.setDescription(createAdsDto.getDescription());
                 ads.setPrice(createAdsDto.getPrice());
                 ads.setTitle(createAdsDto.getTitle());
                 return adsMapper.mapAdsToAdsDto(adsRepository.save(ads));
-            }
         }
         throw new UserNotFoundException();
     }

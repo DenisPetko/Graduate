@@ -26,7 +26,7 @@ public class Ads {
     @JoinColumn(name = "author_id", nullable = false)
     @JsonIgnore
     private User author;
-    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true) //cascade = удаление, все, что было связано(существуют разные типы)
     @JoinColumn(name = "image_id")
     @JsonIgnore
     private Image image;

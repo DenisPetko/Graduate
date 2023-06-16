@@ -17,7 +17,7 @@ public class ValidationForComments {
         if (user.getUsername()
                     .equals(commentRepository.getReferenceById(id)
                             .getAuthor().getUsername()) // поскольку поле username у нас Unique, то удобнее всего проверять именно эот параметр
-                            || user.getRole().equals(Role.ADMIN)) {
+                            || user.getRole() == Role.ADMIN) {
                             return true;
         } else {
             throw new UserValidationException();
