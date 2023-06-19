@@ -7,8 +7,8 @@ import ru.skypro.homework.dto.ResponseWrapperCommentDto;
  * Интерфейс для работы с Comments
  */
 public interface CommentService {
-    ResponseWrapperCommentDto getComments(long adsId);
-    CommentDto addComment(long adId, String commentDto);
-    boolean deleteComment(long adsId, long commentId);
-    CommentDto updateComment(long adsId, long commentId, CommentDto commentDto);
+    ResponseWrapperCommentDto getComments(int adsId);
+    CommentDto addComment(int adId, String commentDto);
+    boolean deleteComment(int adsId, int commentId);
+    CommentDto updateComment(int adsId, int commentId, CommentDto commentDto);
 }

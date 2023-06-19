@@ -12,11 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.UserDto;
-import ru.skypro.homework.exception.ImageNotFoundException;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.Image;
+import ru.skypro.homework.model.Role;
 import ru.skypro.homework.model.User;
-import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UserService;
@@ -31,11 +30,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final ImageService imageService;
-    private final ImageRepository imageRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).orElseThrow(() ->
+        return userRepository.findByUsername(username).orElseThrow(() ->
                 new UsernameNotFoundException("User with username " + username + " doesn't exists"));
     }
 
@@ -43,7 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public Optional<User> findAuthUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        return userRepository.findByEmail(currentPrincipalName);
+        return userRepository.findByUsername(currentPrincipalName);
     }
 
     @Override
@@ -73,8 +71,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void updateUserImage(MultipartFile image) {
         log.info("New avatar {}", image.getName());
-        Image newImage = imageService.saveImage(image);
         User user = findAuthUser().get();
+        Image newImage;
+        if (userRepository.findByUsername(user.getUsername()).get().getImage() == null) {
+            newImage = imageService.saveImage(image);
+        } else {
+            newImage = imageService.updateImage(image, user.getImage());
+        }
         user.setImage(newImage);
         userRepository.save(user);
     }
@@ -83,5 +86,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void updateUserPassword(NewPasswordDto passwordDto) {
         String encodes = encoder.encode(passwordDto.getNewPassword());
         userRepository.setNewPassword(encodes, findAuthUser().get().getId());
+    }
+
+    @Override
+    public void setNewAdminUser(int idOfUser) {
+        User user = userRepository.getReferenceById(idOfUser);
+        user.setRole(Role.ADMIN);
+        userRepository.save(user);
     }
 }
