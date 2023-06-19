@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -83,7 +84,7 @@ public class AdsController {
     )
     @GetMapping("/ads/{adsId}/comments")
     public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable long adsId) {
-        ResponseWrapperCommentDto comments = commentService.getComments(adsId); //todo: написать реализацию
+        ResponseWrapperCommentDto comments = commentService.getComments(adsId);
         return ResponseEntity.ok().body(comments);
     }
 
@@ -143,10 +144,10 @@ public class AdsController {
             responseCode = "403",
             description = "Forbidden"
     )
-
     @DeleteMapping("/ads/{adsId}")
     public ResponseEntity<?> removeAds(@PathVariable long adsId) {
-        return ResponseEntity.ok(adsService.removeAdsDto(adsId));
+        adsService.removeAdsDto(adsId);
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Обновить информацию об объявлении")
@@ -194,7 +195,10 @@ public class AdsController {
     )
     @DeleteMapping("/ads/{adsId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable long adsId, @PathVariable long commentId) {
-        return ResponseEntity.ok(commentService.deleteComment(adsId, commentId));
+        if(commentService.deleteComment(adsId, commentId)){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @Operation(summary = "Обновить комментарий")
