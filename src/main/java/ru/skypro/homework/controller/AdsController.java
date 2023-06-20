@@ -21,7 +21,6 @@ import ru.skypro.homework.service.ImageService;
 
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
-@RequestMapping("/")
 @Tag(name = "Объявления", description = "API по работе с объявлениями")
 @RequiredArgsConstructor
 @Slf4j
@@ -83,6 +82,7 @@ public class AdsController {
             description = "Not Found"
     )
     @GetMapping("/ads/{adsId}/comments")
+
     public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable long adsId) {
         ResponseWrapperCommentDto comments = commentService.getComments(adsId);
         return ResponseEntity.ok().body(comments);
@@ -110,7 +110,7 @@ public class AdsController {
     )
 
     @PostMapping("/ads/{adsId}/comments")
-    public ResponseEntity<CommentDto> addComment(@PathVariable long adsId, @RequestBody String commentDto) {
+    public ResponseEntity<CommentDto> addComment(@PathVariable int adsId, @RequestBody String commentDto) {
         return ResponseEntity.ok(commentService.addComment(adsId, commentDto));
     }
 
@@ -127,7 +127,7 @@ public class AdsController {
             description = "Not Found"
     )
     @GetMapping("/ads/{adsId}")
-    public ResponseEntity<FullAdsDto> getAds(@PathVariable long adsId) {
+    public ResponseEntity<FullAdsDto> getAds(@PathVariable int adsId) {
         return ResponseEntity.ok(adsService.getFullAds(adsId));
     }
 
@@ -148,6 +148,7 @@ public class AdsController {
     public ResponseEntity<?> removeAds(@PathVariable long adsId) {
         adsService.removeAdsDto(adsId);
         return ResponseEntity.noContent().build();
+
     }
 
     @Operation(summary = "Обновить информацию об объявлении")
@@ -172,7 +173,7 @@ public class AdsController {
     )
 
     @PatchMapping("/ads/{adsId}")
-    public ResponseEntity<AdsDto> updateAds(@PathVariable long adsId, @RequestBody CreateAdsDto createAdsDto) {
+    public ResponseEntity<AdsDto> updateAds(@PathVariable int adsId, @RequestBody CreateAdsDto createAdsDto) {
         return ResponseEntity.ok(adsService.updateAdsDto(adsId, createAdsDto));
     }
 
@@ -222,7 +223,7 @@ public class AdsController {
             description = "Forbidden"
     )
     @PatchMapping("/ads/{adsId}/comments/{commentId}")
-    public ResponseEntity<CommentDto> updateComment(@PathVariable long adsId, @PathVariable long commentId, @RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> updateComment(@PathVariable int adsId, @PathVariable int commentId, @RequestBody CommentDto commentDto) {
         return ResponseEntity.ok(commentService.updateComment(adsId, commentId, commentDto));
     }
 
@@ -259,7 +260,7 @@ public class AdsController {
             description = "Not Found"
     )
     @PatchMapping(value = "/ads/{adsId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage(@PathVariable long adsId, @RequestPart MultipartFile image) {
+    public ResponseEntity<byte[]> updateImage(@PathVariable int adsId, @RequestPart MultipartFile image) {
         adsService.updateImageAdsDto(adsId, image);
         return ResponseEntity.ok().build();
     }
@@ -271,10 +272,8 @@ public class AdsController {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "404", description = "Not found", content = @Content())
             })
-    @GetMapping(value = "ads/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value = "/ads/{id}/image", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("id") String id){
         return ResponseEntity.ok(imageService.getImage(id));
     }
-
-
 }

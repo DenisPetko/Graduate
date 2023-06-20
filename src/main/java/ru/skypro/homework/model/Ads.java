@@ -1,5 +1,6 @@
 package ru.skypro.homework.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,14 @@ import java.util.List;
 public class Ads {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
+    @JsonIgnore
     private User author;
-    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true) //cascade = удаление, все, что было связано(существуют разные типы)
     @JoinColumn(name = "image_id")
+    @JsonIgnore
     private Image image;
     private int price;
     private String title;

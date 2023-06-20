@@ -22,7 +22,6 @@ import ru.skypro.homework.service.AuthService;
 
 import static ru.skypro.homework.model.Role.USER;
 
-@Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @AllArgsConstructor
@@ -52,7 +51,6 @@ public class AuthController {
     )
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterReqDto req) {
-        log.info("New request for register:{},{}}",req.getUsername(), req.getRole());
         Role role = req.getRole() == null ? USER : req.getRole();
         if (authService.register(req, role)) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -84,7 +82,6 @@ public class AuthController {
     )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginReqDto req) {
-        log.info("New login:{},{}}",req.getUsername());
         if (authService.login(req.getUsername(), req.getPassword())) {
             return ResponseEntity.ok().build();
         } else {

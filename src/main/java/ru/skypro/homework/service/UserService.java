@@ -13,4 +13,6 @@ public interface UserService {
     UserDto updateUserDto(UserDto newUserDto);
     void updateUserImage(MultipartFile image);
     void updateUserPassword(NewPasswordDto passwordDto);
+
+    void setNewAdminUser(int idOfUser);
 }

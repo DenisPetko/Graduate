@@ -1,0 +1,22 @@
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.liquibase.change-log=liquibase/changelog-master.yml\n\nlogging.level.root=info\nlogging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} - %msg%n\nlogging.pattern.file=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n\nlogging.file.name=appLog.log\nlogging.logback.rollingpolicy.max-file-size=10MB\nlogging.logback.rollingpolicy.max-history=7\n\nspring.datasource.url=\nspring.datasource.username=\nspring.datasource.password=\nspring.jpa.hibernate.ddl-auto=validate
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+--- a/src/main/resources/application.properties	(revision 8aba545cc81b822cf79eae44fc34b61fd1760ae9)
++++ b/src/main/resources/application.properties	(date 1686497779310)
+@@ -7,7 +7,7 @@
+ logging.logback.rollingpolicy.max-file-size=10MB
+ logging.logback.rollingpolicy.max-history=7
+ 
+-spring.datasource.url=
+-spring.datasource.username=
+-spring.datasource.password=
++spring.datasource.url=jdbc:postgresql://localhost:5433/diploma
++spring.datasource.username=postgres
++spring.datasource.password=Couldlie
+ spring.jpa.hibernate.ddl-auto=validate
+\ No newline at end of file
