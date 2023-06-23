@@ -83,7 +83,7 @@ public class AdsController {
     )
     @GetMapping("/ads/{adsId}/comments")
 
-    public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable long adsId) {
+    public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable int adsId) {
         ResponseWrapperCommentDto comments = commentService.getComments(adsId);
         return ResponseEntity.ok().body(comments);
     }
@@ -145,7 +145,7 @@ public class AdsController {
             description = "Forbidden"
     )
     @DeleteMapping("/ads/{adsId}")
-    public ResponseEntity<?> removeAds(@PathVariable long adsId) {
+    public ResponseEntity<?> removeAds(@PathVariable int adsId) {
         adsService.removeAdsDto(adsId);
         return ResponseEntity.noContent().build();
 
@@ -195,7 +195,7 @@ public class AdsController {
             description = "Forbidden"
     )
     @DeleteMapping("/ads/{adsId}/comments/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable long adsId, @PathVariable long commentId) {
+    public ResponseEntity<?> deleteComment(@PathVariable int adsId, @PathVariable int commentId) {
         if(commentService.deleteComment(adsId, commentId)){
             return ResponseEntity.status(HttpStatus.OK).build();
         }

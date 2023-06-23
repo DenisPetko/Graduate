@@ -17,12 +17,12 @@ import ru.skypro.homework.model.Ads;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.CommentService;
+import ru.skypro.homework.service.ImageService;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @ContextConfiguration(classes = {WebSecurityConfig.class})
@@ -31,6 +31,8 @@ class AdsControllerTest {
     private AdsService adsService;
     @Mock
     private CommentService commentService;
+    @Mock
+    private ImageService imageService;
 
     @InjectMocks
     AdsController adsController;
@@ -38,12 +40,17 @@ class AdsControllerTest {
     private final CreateAdsDto createAdsDto = new CreateAdsDto();
     private final Ads ads = new Ads();
     private final Comment comment = new Comment();
+    private final CommentDto commentDto = new CommentDto();
+
 
     @BeforeEach
     public void setUp() {
         createAdsDto.setDescription("test description");
         createAdsDto.setTitle("test title");
         createAdsDto.setPrice(300);
+
+        commentDto.setPk(1);
+        commentDto.setText("test commentDto");
 
         ads.setId(1);
         comment.setId(2);
@@ -99,7 +106,6 @@ class AdsControllerTest {
     @Test
     void addComment() {
         String comment = "test";
-        CommentDto commentDto = new CommentDto();
 
         when(commentService.addComment(ads.getId(), comment)).thenReturn(commentDto);
 
@@ -138,7 +144,7 @@ class AdsControllerTest {
     }
 
     @Test
-    void updateAds() {
+    void shouldUpdateAds() {
         AdsDto adsDto = new AdsDto();
         adsDto.setTitle("test title");
         adsDto.setPrice(300);
@@ -155,7 +161,7 @@ class AdsControllerTest {
     }
 
     @Test
-    void deleteCommentWithOK() {
+    void shouldDeleteCommentWithOK() {
         when(commentService.deleteComment(ads.getId(), comment.getId())).thenReturn(true);
 
         ResponseEntity<?> response = adsController.deleteComment(ads.getId(), comment.getId());
@@ -164,8 +170,9 @@ class AdsControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
     }
+
     @Test
-    void deleteCommentWithNotFound() {
+    void shouldDeleteCommentWithNotFound() {
         when(commentService.deleteComment(ads.getId(), comment.getId())).thenReturn(false);
 
         ResponseEntity<?> response = adsController.deleteComment(ads.getId(), comment.getId());
@@ -175,18 +182,55 @@ class AdsControllerTest {
     }
 
     @Test
-    void updateComment() {
+    void shouldUpdateComment() {
+        when(commentService.updateComment(ads.getId(), comment.getId(), commentDto)).thenReturn(commentDto);
+
+        ResponseEntity<CommentDto> response = adsController.updateComment(ads.getId(), comment.getId(), commentDto);
+
+        verify(commentService).updateComment(ads.getId(), comment.getId(), commentDto);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(commentDto.getText(), Objects.requireNonNull(response.getBody()).getText());
+        assertEquals(commentDto.getPk(), response.getBody().getPk());
     }
 
     @Test
     void getAdsMe() {
+        List<AdsDto> adsDtoList = Collections.singletonList(new AdsDto());
+        ResponseWrapperAdsDto adsDto = new ResponseWrapperAdsDto(adsDtoList);
+
+        when(adsService.getAllAdsMe()).thenReturn(adsDto);
+
+        ResponseEntity<ResponseWrapperAdsDto> response = adsController.getAdsMe();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
     }
 
     @Test
     void updateImage() {
+        MultipartFile image = new MockMultipartFile("image.jpg", new byte[]{1, 2, 3});
+
+        doNothing().when(adsService).updateImageAdsDto(ads.getId(), image);
+
+        ResponseEntity<byte[]> response = adsController.updateImage(ads.getId(), image);
+
+        verify(adsService).updateImageAdsDto(ads.getId(), image);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void getImage() {
+        String id = "1";
+        byte[] mockImage = {1, 2, 3};
+
+        when(imageService.getImage(id)).thenReturn(mockImage);
+
+        ResponseEntity<byte[]> response = adsController.getImage(id);
+
+        verify(imageService).getImage(id);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertArrayEquals(mockImage, response.getBody());
     }
 }
